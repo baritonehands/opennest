@@ -5,50 +5,41 @@ Rectangle {
     width: 320
     height: 240
 
-    signal upArrowClicked;
+    property int temp: 72
 
-    Column {
-        id: column1
-        width: 160
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.left: parent.left
-        anchors.leftMargin: 0
+    Row {
+        spacing: 10
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+        Column {
+            x: 0
+            y: 0
+            height: 125
 
-        Text {
-            id: text1
-            x: 67
-            y: 99
-            text: qsTr("72º")
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: parent.verticalCenter
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 48
-        }
-    }
-
-    Column {
-        id: column2
-        x: 0
-        width: 160
-        height: 240
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 0
-        anchors.top: parent.top
-        anchors.topMargin: 0
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-
-        function createClicked(control) {
-            return function() {
-                console.log(control.direction)
+            Text {
+                id: txTemp
+                height: 125
+                text: qsTr("72º")
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                font.pixelSize: 48
             }
         }
 
-        Arrow { id: upArrow; objectName: "upArrow"; direction: 1; onClicked: parent.createClicked(upArrow)() }
-        Arrow { id: downArrow; objectName: "downArrow"; direction: -1; onClicked: parent.createClicked(downArrow)() }
+        Column {
+            x: 0
+            y: 0
+            width: 60
+            height: 125
+            spacing: 5
+
+            function changeTemp(control) {
+                txTemp.text = qsTr("%1º".arg(temp += control.direction))
+                console.log(control.direction);
+            }
+
+            Arrow { id: upArrow; objectName: "upArrow"; direction: 1; onClicked: parent.changeTemp(upArrow); }
+            Arrow { id: downArrow; objectName: "downArrow"; direction: -1; onClicked: parent.changeTemp(downArrow) }
+        }
     }
 }
