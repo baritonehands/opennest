@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from PyQt4.QtCore import QDateTime, QObject, QUrl, pyqtSignal
-from PyQt4.QtGui import QApplication, QGraphicsItem, QColor, QPainter, QPainterPath
-from PyQt4.QtDeclarative import QDeclarativeView, QDeclarativeItem
+from PyQt4.QtGui import QGraphicsItem, QColor, QPainter, QPainterPath
+from PyQt4.QtDeclarative import QDeclarativeItem
 
 class Triangle(QDeclarativeItem):
     def __init__(self, parent):
