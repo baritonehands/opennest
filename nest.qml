@@ -47,6 +47,7 @@ Rectangle {
                 function changeTemp(control) {
                     txTemp.text = qsTr("%1º".arg(temp += control.direction))
                     console.log(control.direction);
+                    console.log(weather.weather.temp)
                 }
 
                 Arrow { id: upArrow; objectName: "upArrow"; direction: 1; onClicked: parent.changeTemp(upArrow); }
