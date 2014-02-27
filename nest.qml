@@ -7,7 +7,7 @@ Rectangle {
 
     property int temp: 72
 
-    Rectangle {
+    Item {
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
