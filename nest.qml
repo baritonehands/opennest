@@ -30,7 +30,7 @@ Rectangle {
                 Text {
                     id: txTemp
                     height: 125
-                    text: qsTr("72º")
+                    text: qsTr("72ºF")
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 48
@@ -45,7 +45,7 @@ Rectangle {
                 spacing: 5
 
                 function changeTemp(control) {
-                    txTemp.text = qsTr("%1º".arg(temp += control.direction))
+                    txTemp.text = qsTr("%1ºF".arg(temp += control.direction))
                     console.log(control.direction);
                     console.log(weather.weather.temp)
                 }
