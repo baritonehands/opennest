@@ -8,22 +8,23 @@ class Weather(QObject):
     def __init__(self, parent = None, units='imperial'):
         QObject.__init__(self, parent)
         self.units = units
-        self._running = False
         parent.setProperty('weather', self)
 
     def run(self):
-        while self._running:
-            self._current = pywapi.get_weather_from_yahoo('60602', self.units)
-            time.sleep(5)
+        self._current = pywapi.get_weather_from_yahoo('60602', self.units)
+        self._t = threading.Timer(30, self.run)
+        self._t.start()
+        print 'Starting new timer...'
 
     @pyqtProperty(int)
     def temp(self):
         return int(self._current['condition']['temp'])
 
     def start(self):
-        self._t = threading.Thread(target=self.run)
-        self._running = True
-        self._t.start()
+        self.stop()
+        self.run()
 
     def stop(self):
-        self._running = False
+        if(self._t != None):
+            self._t.cancel()
+            self._t = None
