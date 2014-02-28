@@ -25,11 +25,13 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 36
+        font.family: "Bariol"
     }
 
     function updateView(data) {
         if(data.weatherAvailable) {
-            currentTemp.text = "%1ºF".arg(data.temp)
+            currentTemp.text = data.tempDisplay
+            console.log(data.tempDisplay)
         }
     }
 

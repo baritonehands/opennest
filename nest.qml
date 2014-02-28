@@ -29,10 +29,11 @@ Rectangle {
 
                 Text {
                     id: txTemp
+                    width: 120
                     height: 125
-                    text: qsTr("72ºF")
+                    text: qsTr("72° F")
+                    font.family: "Bariol"
                     verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: 48
                 }
             }
@@ -42,12 +43,10 @@ Rectangle {
                 y: 0
                 width: 60
                 height: 125
-                spacing: 5
+                spacing: 10
 
                 function changeTemp(control) {
-                    txTemp.text = qsTr("%1ºF".arg(temp += control.direction))
-                    console.log(control.direction);
-                    console.log(weather.weather.temp)
+                    txTemp.text = qsTr("%1\u00b0 F".arg(temp += control.direction))
                 }
 
                 Arrow { id: upArrow; objectName: "upArrow"; direction: 1; onClicked: parent.changeTemp(upArrow); }

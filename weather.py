@@ -44,11 +44,15 @@ class Weather(QObject):
     def temp(self):
         return int(self._current['condition']['temp'])
 
+    @pyqtProperty(str)
+    def tempDisplay(self):
+        return u'%i\u00b0 %s' % (self.temp, self._current['units']['temperature'])
+
     def start(self):
         self.stop()
         self.run()
 
     def stop(self):
-        if(self._t != None):
+        if(self._t is not None):
             self._t.cancel()
             self._t = None
