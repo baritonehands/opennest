@@ -49,7 +49,7 @@ class Weather(QObject):
         self.changed.emit(self)
         self._t = threading.Timer(30, self.run)
         self._t.start()
-        #self._pp.pprint(self._current)
+        self._pp.pprint(self._current)
 
     @pyqtProperty(bool)
     def weatherAvailable(self):
@@ -59,9 +59,25 @@ class Weather(QObject):
     def temp(self):
         return int(self._current['condition']['temp'])
 
+    def formatTemp(self, temp):
+        return u'%i\u00b0 %s' % (temp, self._current['units']['temperature'])
+
     @pyqtProperty(str)
     def tempDisplay(self):
-        return u'%i\u00b0 %s' % (self.temp, self._current['units']['temperature'])
+        return self.formatTemp(self.temp)
+
+    @pyqtProperty(str)
+    def highDisplay(self):
+        return self.formatTemp(int(self._current['forecasts'][0]['high']))
+
+    @pyqtProperty(str)
+    def lowDisplay(self):
+        return self.formatTemp(int(self._current['forecasts'][0]['low']))
+
+    @pyqtProperty(str)
+    def location(self):
+        loc = self._current['location']
+        return '%s, %s' % (loc['city'], loc['region'])
 
     def start(self):
         self.stop()
