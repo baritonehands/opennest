@@ -45,9 +45,8 @@ Rectangle {
 
                 Text {
                     id: txTemp
-                    width: 120
                     height: 125
-                    text: qsTr("72° F")
+                    text: qsTr("72°")
                     font.family: "Bariol"
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: 48
@@ -62,7 +61,7 @@ Rectangle {
                 spacing: 10
 
                 function changeTemp(control) {
-                    txTemp.text = qsTr("%1\u00b0 F".arg(temp += control.direction))
+                    txTemp.text = qsTr("%1\u00b0".arg(temp += control.direction))
                 }
 
                 Arrow { id: upArrow; objectName: "upArrow"; direction: 1; onClicked: parent.changeTemp(upArrow); }

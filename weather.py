@@ -23,6 +23,9 @@ from PyQt4.QtCore import QObject, pyqtProperty, pyqtSignal
 class Weather(QObject):
     changed = pyqtSignal(QObject)
 
+    # Map condition codes to icons. http://developer.yahoo.com/weather/#codes
+    icons = {'33':3, '34':2, '26':14}
+
     def __init__(self, parent = None, units='imperial'):
         QObject.__init__(self, parent)
         self._t = None
@@ -78,6 +81,10 @@ class Weather(QObject):
     def location(self):
         loc = self._current['location']
         return '%s, %s' % (loc['city'], loc['region'])
+
+    @pyqtProperty(int)
+    def conditionIcon(self):
+        return self.icons[self._current['condition']['code']]
 
     def start(self):
         self.stop()

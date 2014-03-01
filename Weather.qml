@@ -40,6 +40,8 @@ Rectangle {
         anchors.bottomMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
+        anchors.right: icon.left
+        anchors.rightMargin: 10
         font.pixelSize: 24
         font.family: "Bariol"
     }
@@ -47,8 +49,8 @@ Rectangle {
     Image {
         id: icon
         objectName: "icon"
-        source: "icons/8.svg"
-        width: 32
+        source: "icons/simple_weather_icon_12.png"
+        width: 36
         fillMode: Image.PreserveAspectFit
         smooth: true
         anchors.right: currentTemp.left
@@ -89,28 +91,14 @@ Rectangle {
         horizontalAlignment: Text.AlignRight
         font.pixelSize: 16
         font.family: "Bariol"
-    }/*
-    Text {
-        id: low
-        //color: "#ffffff"
-        text: qsTr("8\u00b0 F")
-        anchors.right: currentLoc.left
-        anchors.rightMargin: 10
-        anchors.bottom: currentTemp.bottom
-        anchors.bottomMargin: 0
-        verticalAlignment: Text.AlignBottom
-        horizontalAlignment: Text.Right
-        font.pixelSize: 16
-        font.family: "Bariol"
-    }*/
-
-
+    }
 
     function updateView(data) {
         if(data.weatherAvailable) {
             currentTemp.text = data.tempDisplay
             currentLoc.text = data.location
             highLow.text = '%1 \u2191\n%1 \u2193'.arg(data.highDisplay, data.lowDisplay)
+            //icon.source = 'icons/%1.svg'.arg(data.conditionIcon)
             //low.text = data.lowDisplay
             console.log(data.tempDisplay)
         }
