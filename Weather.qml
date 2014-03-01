@@ -30,8 +30,7 @@ Rectangle {
 
     Text {
         id: currentLoc
-        //color: "#ffffff"
-        text: qsTr("Text")
+        text: qsTr("Chicago, IL")
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         anchors.left: parent.left
@@ -44,6 +43,7 @@ Rectangle {
         anchors.rightMargin: 10
         font.pixelSize: 24
         font.family: "Bariol"
+        wrapMode: Text.Wrap
     }
 
     Image {
@@ -63,7 +63,6 @@ Rectangle {
 
     Text {
         id: currentTemp
-        //color: "#ffffff"
         text: qsTr("...")
         anchors.right: highLow.left
         anchors.rightMargin: 10
@@ -79,7 +78,6 @@ Rectangle {
 
     Text {
         id: highLow
-        //color: "#ffffff"
         text: qsTr("25\u00b0 F")
         anchors.right: parent.right
         anchors.rightMargin: 10
@@ -98,8 +96,7 @@ Rectangle {
             currentTemp.text = data.tempDisplay
             currentLoc.text = data.location
             highLow.text = '%1 \u2191\n%1 \u2193'.arg(data.highDisplay, data.lowDisplay)
-            //icon.source = 'icons/%1.svg'.arg(data.conditionIcon)
-            //low.text = data.lowDisplay
+            icon.source = 'icons/simple_weather_icon_%1.png'.arg(data.conditionIcon)
             console.log(data.tempDisplay)
         }
     }

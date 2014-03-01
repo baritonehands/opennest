@@ -46,6 +46,7 @@ Rectangle {
                 Text {
                     id: txTemp
                     height: 125
+                    width: 80
                     text: qsTr("72°")
                     font.family: "Bariol"
                     verticalAlignment: Text.AlignVCenter

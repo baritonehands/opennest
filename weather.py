@@ -24,7 +24,11 @@ class Weather(QObject):
     changed = pyqtSignal(QObject)
 
     # Map condition codes to icons. http://developer.yahoo.com/weather/#codes
-    icons = {'33':3, '34':2, '26':14}
+    icons = ['30','30','30','27','27','26','23','26','21','21',
+        '26','22','22','24','24','25','25','28','23','30',
+        '09','08','08','30','30','51','06','04','04','07',
+        '03','02','01','02','01','29','01','27','27','27',
+        '21','25','04','27','24','27']
 
     def __init__(self, parent = None, units='imperial'):
         QObject.__init__(self, parent)
@@ -82,9 +86,9 @@ class Weather(QObject):
         loc = self._current['location']
         return '%s, %s' % (loc['city'], loc['region'])
 
-    @pyqtProperty(int)
+    @pyqtProperty(str)
     def conditionIcon(self):
-        return self.icons[self._current['condition']['code']]
+        return self.icons[int(self._current['condition']['code'])]
 
     def start(self):
         self.stop()
