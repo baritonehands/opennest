@@ -22,8 +22,10 @@ Rectangle {
     height: 240
 
     property int temp: 72
+    property string fontFamily: "Bariol"
 
     Item {
+        id: item1
         anchors.right: parent.right
         anchors.rightMargin: 0
         anchors.left: parent.left
@@ -32,6 +34,7 @@ Rectangle {
         anchors.bottomMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
+
         Row {
             width: 154
             height: 125
@@ -48,7 +51,7 @@ Rectangle {
                     height: 125
                     width: 80
                     text: qsTr("72°")
-                    font.family: "Bariol"
+                    font.family: main.fontFamily
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: 48
                 }
@@ -69,9 +72,21 @@ Rectangle {
                 Arrow { id: downArrow; objectName: "downArrow"; direction: -1; onClicked: parent.changeTemp(downArrow) }
             }
         }
+
+        Clock {
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+
+            fontFamily: fontFamily
+        }
     }
 
     Weather {
         id: weather
+        fontFamily: parent.fontFamily
     }
 }

@@ -28,6 +28,9 @@ Rectangle {
     anchors.left: parent.left
     anchors.leftMargin: 0
 
+    property color textColor: "#000000"
+    property string fontFamily: "Bariol"
+
     Text {
         id: currentLoc
         text: qsTr("Chicago, IL")
@@ -42,7 +45,7 @@ Rectangle {
         anchors.right: icon.left
         anchors.rightMargin: 10
         font.pixelSize: 24
-        font.family: "Bariol"
+        font.family: parent.fontFamily
         wrapMode: Text.Wrap
     }
 
@@ -73,7 +76,7 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         font.pixelSize: 32
-        font.family: "Bariol"
+        font.family: parent.fontFamily
     }
 
     Text {
@@ -88,7 +91,7 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignRight
         font.pixelSize: 16
-        font.family: "Bariol"
+        font.family: parent.fontFamily
     }
 
     function updateView(data) {
