@@ -49,7 +49,7 @@ Rectangle {
     Image {
         id: icon
         objectName: "icon"
-        source: "icons/simple_weather_icon_12.png"
+        source: "icons/sw-12.svg"
         width: 36
         fillMode: Image.PreserveAspectFit
         smooth: true
@@ -96,7 +96,7 @@ Rectangle {
             currentTemp.text = data.tempDisplay
             currentLoc.text = data.location
             highLow.text = '%1 \u2191\n%1 \u2193'.arg(data.highDisplay, data.lowDisplay)
-            icon.source = 'icons/simple_weather_icon_%1.png'.arg(data.conditionIcon)
+            icon.source = 'icons/sw-%1.svg'.arg(data.conditionIcon)
             console.log(data.tempDisplay)
         }
     }
