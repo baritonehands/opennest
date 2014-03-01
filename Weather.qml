@@ -29,34 +29,70 @@ Rectangle {
     anchors.leftMargin: 0
 
     Text {
-        id: currentTemp
-        color: "#ffffff"
-        text: qsTr("...")
+        id: currentLoc
+        //color: "#ffffff"
+        text: qsTr("Text")
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignLeft
         anchors.left: parent.left
         anchors.leftMargin: 10
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
-        verticalAlignment: Text.AlignBottom
+        anchors.bottomMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        font.pixelSize: 24
+        font.family: "Bariol"
+    }
+
+    Image {
+        id: icon
+        objectName: "icon"
+        source: "icons/8.svg"
+        width: 32
+        fillMode: Image.PreserveAspectFit
+        smooth: true
+        anchors.right: currentTemp.left
+        anchors.rightMargin: 10
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
+    }
+
+    Text {
+        id: currentTemp
+        //color: "#ffffff"
+        text: qsTr("...")
+        anchors.right: highLow.left
+        anchors.rightMargin: 10
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         font.pixelSize: 32
         font.family: "Bariol"
     }
+
     Text {
-        id: high
-        color: "#ffffff"
+        id: highLow
+        //color: "#ffffff"
         text: qsTr("25\u00b0 F")
-        anchors.right: currentLoc.left
+        anchors.right: parent.right
         anchors.rightMargin: 10
-        anchors.bottom: low.top
+        anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
-        verticalAlignment: Text.AlignBottom
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignRight
         font.pixelSize: 16
         font.family: "Bariol"
-    }
+    }/*
     Text {
         id: low
-        color: "#ffffff"
+        //color: "#ffffff"
         text: qsTr("8\u00b0 F")
         anchors.right: currentLoc.left
         anchors.rightMargin: 10
@@ -66,28 +102,16 @@ Rectangle {
         horizontalAlignment: Text.Right
         font.pixelSize: 16
         font.family: "Bariol"
-    }
+    }*/
 
-    Text {
-        id: currentLoc
-        color: "#ffffff"
-        text: qsTr("Text")
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignRight
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: 10
-        font.pixelSize: 24
-        font.family: "Bariol"
-    }
+
 
     function updateView(data) {
         if(data.weatherAvailable) {
             currentTemp.text = data.tempDisplay
             currentLoc.text = data.location
-            high.text = data.highDisplay
-            low.text = data.lowDisplay
+            highLow.text = '%1 \u2191\n%1 \u2193'.arg(data.highDisplay, data.lowDisplay)
+            //low.text = data.lowDisplay
             console.log(data.tempDisplay)
         }
     }

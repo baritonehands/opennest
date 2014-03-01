@@ -19,7 +19,7 @@
 import sys, platform
 
 from PyQt4.QtCore import QDateTime, QObject, QUrl, pyqtSignal
-from PyQt4.QtGui import QApplication
+from PyQt4.QtGui import QApplication, QGraphicsColorizeEffect, QColor
 from PyQt4.QtDeclarative import QDeclarativeView
 from triangle import *
 from weather import *

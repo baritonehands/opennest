@@ -60,7 +60,7 @@ class Weather(QObject):
         return int(self._current['condition']['temp'])
 
     def formatTemp(self, temp):
-        return u'%i\u00b0 %s' % (temp, self._current['units']['temperature'])
+        return u'%i\u00b0' % temp #, self._current['units']['temperature'])
 
     @pyqtProperty(str)
     def tempDisplay(self):
