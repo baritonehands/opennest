@@ -81,7 +81,8 @@ Rectangle {
 
     Text {
         id: highLow
-        text: qsTr("25\u00b0 F")
+        text: "95 \u2191\n5 \u2193"
+        wrapMode: Text.NoWrap
         anchors.right: parent.right
         anchors.rightMargin: 10
         anchors.bottom: parent.bottom
@@ -98,7 +99,7 @@ Rectangle {
         if(data.weatherAvailable) {
             currentTemp.text = data.tempDisplay
             currentLoc.text = data.location
-            highLow.text = '%1 \u2191\n%1 \u2193'.arg(data.highDisplay, data.lowDisplay)
+            highLow.text = '\u2191 %1\n\u2193 %2'.arg(data.highDisplay).arg(data.lowDisplay)
             icon.source = 'icons/sw-%1.svg'.arg(data.conditionIcon)
             console.log(data.tempDisplay)
         }
