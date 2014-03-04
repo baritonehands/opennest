@@ -17,5 +17,53 @@
 import QtQuick 1.1
 
 Rectangle {
+    state: "ON"
 
+    property string text
+    property string fontFamily: "Bariol"
+
+    states: [
+        State {
+            name: "OFF"
+            PropertyChanges {
+                target: text; color: "#999999"
+            }
+            PropertyChanges {
+                target: icon; color: "#FFFFFF"; border.color: "#999999"
+            }
+        },
+        State {
+            name: "ON"
+            PropertyChanges {
+                target: text; color: "#000000"
+            }
+            PropertyChanges {
+                target: icon; color: "green"; border.color: "#000000"
+            }
+        }
+    ]
+
+    Rectangle {
+        id: icon
+        width: 12; height: 12; radius: 12
+        anchors.verticalCenter: text.verticalCenter
+        color: "green"
+        border.color: "#000000"
+        border.width: 1
+        smooth: true
+    }
+
+    Text {
+        id: text
+        text: parent.text
+        font.pixelSize: 16
+        font.family: fontFamily
+        font.bold: true
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        font.capitalization: Font.AllUppercase
+        anchors.left: icon.right
+        anchors.leftMargin: 3
+        smooth: true
+    }
 }

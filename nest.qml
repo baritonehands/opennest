@@ -73,15 +73,44 @@ Rectangle {
             }
         }
 
-        Clock {
+        Item {
             anchors.top: parent.top
             anchors.topMargin: 5
             anchors.left: parent.left
-            anchors.leftMargin: 0
+            anchors.leftMargin: 5
             anchors.right: parent.right
-            anchors.rightMargin: 0
+            anchors.rightMargin: 5
 
-            fontFamily: fontFamily
+            Status {
+                id: fanStatus
+                fontFamily: fontFamily
+                text: "Fan"
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                state: "OFF"
+            }
+
+            Status {
+                id: heatStatus
+                fontFamily: fontFamily
+                text: "Heat"
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+            }
+
+            Status {
+                id: coolStatus
+                fontFamily: fontFamily
+                text: "Cool"
+                anchors.right: heatStatus.left
+                anchors.rightMargin: 5
+                state: "OFF"
+            }
+
+            Clock {
+                anchors.horizontalCenter: parent.horizontalCenter
+                fontFamily: fontFamily
+            }
         }
     }
 

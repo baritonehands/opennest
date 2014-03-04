@@ -19,6 +19,7 @@
 import pywapi, threading, time, pprint
 import json, urllib2
 from PyQt4.QtCore import QObject, pyqtProperty, pyqtSignal
+from PyQt4.QtGui import QMessageBox
 
 class Weather(QObject):
     changed = pyqtSignal(QObject)
@@ -37,10 +38,18 @@ class Weather(QObject):
         self.units = units
         parent.setProperty('weather', self)
         self._pp = pprint.PrettyPrinter(indent=4)
-        self._loc = json.load(urllib2.urlopen('http://freegeoip.net/json'))
-        self._pp.pprint(self._loc)
+        try:
+            self._loc = json.load(urllib2.urlopen('http://freegeoip.net/json', timeout=20))
+            self._pp.pprint(self._loc)
+        except urllib2.URLError:
+            b = QMessageBox(QMessageBox.Information, 'Testing', 'Testing message box.', QMessageBox.Ok)
+            b.exec_()
+            self._loc = dict()
 
     def load_weather(self):
+        if(len(self._loc.items()) == 0):
+            return dict()
+
         if(self._loc['zipcode'] != ''):
             zip = self._loc['zipcode']
             return pywapi.get_weather_from_yahoo(zip, self.units)
