@@ -19,7 +19,7 @@ import QtQuick 1.1
 Rectangle {
     state: "ON"
 
-    property string text
+    property string text: "Text"
     property string fontFamily: "Bariol"
 
     states: [
@@ -35,7 +35,7 @@ Rectangle {
         State {
             name: "ON"
             PropertyChanges {
-                target: text; color: "#000000"
+                target: text; color: "#FFFFFF"
             }
             PropertyChanges {
                 target: icon; color: "green"; border.color: "#000000"
@@ -45,10 +45,8 @@ Rectangle {
 
     Rectangle {
         id: icon
-        width: 12; height: 12; radius: 12
-        anchors.verticalCenter: text.verticalCenter
-        color: "green"
-        border.color: "#000000"
+        radius: 6
+        anchors.fill: parent
         border.width: 1
         smooth: true
     }
@@ -62,8 +60,12 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
         font.capitalization: Font.AllUppercase
-        anchors.left: icon.right
-        anchors.leftMargin: 3
         smooth: true
+        anchors.centerIn: parent
+
+        Component.onCompleted: {
+            parent.width = width + 8
+            parent.height = height + 3
+        }
     }
 }

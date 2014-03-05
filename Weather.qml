@@ -99,7 +99,7 @@ Rectangle {
         if(data.weatherAvailable) {
             currentTemp.text = data.tempDisplay
             currentLoc.text = data.location
-            highLow.text = '\u2191 %1\n\u2193 %2'.arg(data.highDisplay).arg(data.lowDisplay)
+            highLow.text = '%1 \u2191<br>%2 \u2193'.arg(data.highDisplay).arg(data.lowDisplay)
             icon.source = 'icons/sw-%1.svg'.arg(data.conditionIcon)
             console.log(data.tempDisplay)
         }

@@ -87,7 +87,7 @@ Rectangle {
                 text: "Fan"
                 anchors.left: parent.left
                 anchors.leftMargin: 0
-                state: "OFF"
+                state: "ON"
             }
 
             Status {
