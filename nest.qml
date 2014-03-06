@@ -118,4 +118,16 @@ Rectangle {
         id: weather
         fontFamily: parent.fontFamily
     }
+
+    Alert {
+        id: alert
+        fontFamily: fontFamily
+        onButtonClicked: {
+            console.log('Clicked ' + button)
+        }
+    }
+
+    Component.onCompleted: {
+        alert.show('Testing text!', ['OK', 'Cancel'])
+    }
 }
