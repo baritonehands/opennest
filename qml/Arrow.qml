@@ -17,8 +17,19 @@
 import QtQuick 1.1
 
 MouseArea {
+    id: m
     width: 50
     height: 50
 
     property int direction: 1
+
+    onPressed: {
+        m.children[0].color = "#82CAFA"
+        m.children[0].borderColor = "#CCCCCC"
+    }
+
+    onReleased: {
+        m.children[0].color = "#CCCCCC"
+        m.children[0].borderColor = "#82CAFA"
+    }
 }

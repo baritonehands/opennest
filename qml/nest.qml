@@ -37,7 +37,8 @@ Rectangle {
 
         Row {
             height: 110
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: statusBars.bottom
+            anchors.topMargin: 30
             spacing: 10
             anchors.horizontalCenter: parent.horizontalCenter
             Column {
@@ -73,6 +74,7 @@ Rectangle {
         }
 
         Item {
+            id: statusBars
             anchors.top: parent.top
             anchors.topMargin: 5
             anchors.left: parent.left
