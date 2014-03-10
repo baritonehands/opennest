@@ -18,6 +18,7 @@ import QtQuick 1.1
 
 MouseArea {
     state: "NORMAL"
+    height: 40
 
     property string text: "Text"
     property string fontFamily: "Bariol"
@@ -72,7 +73,6 @@ MouseArea {
 
         Component.onCompleted: {
             parent.width = width + 30
-            parent.height = height + 10
         }
     }
 }

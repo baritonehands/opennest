@@ -23,6 +23,7 @@ from PyQt4.QtGui import QMessageBox
 
 class Weather(QObject):
     changed = pyqtSignal(QObject)
+    error = pyqtSignal(str)
 
     # Map condition codes to icons. http://developer.yahoo.com/weather/#codes
     icons = ['30','30','30','27','27','26','23','26','21','21',
@@ -39,11 +40,11 @@ class Weather(QObject):
         parent.setProperty('weather', self)
         self._pp = pprint.PrettyPrinter(indent=4)
         try:
+            #raise urllib2.URLError('Testing')
             self._loc = json.load(urllib2.urlopen('http://freegeoip.net/json', timeout=20))
             self._pp.pprint(self._loc)
         except urllib2.URLError:
-            b = QMessageBox(QMessageBox.Information, 'Testing', 'Testing message box.', QMessageBox.Ok)
-            b.exec_()
+            self.error.emit('Unable to get location.')
             self._loc = dict()
 
     def load_weather(self):

@@ -17,13 +17,56 @@
 import QtQuick 1.1
 
 Item {
+    id: alert
     width: 320
     height: 240
     visible: false
+    state: "CLOSED"
 
     signal buttonClicked (int button)
 
     property string fontFamily: "Bariol"
+
+    states: [
+        State {
+            name: "OPEN"
+            PropertyChanges {
+                target: bg; opacity: 0.6
+            }
+            PropertyChanges {
+                target: inner; scale: 1.0;
+
+            }
+        },
+        State {
+            name: "CLOSED"
+            PropertyChanges {
+                target: bg; opacity: 0.1
+            }
+            PropertyChanges {
+                target: inner; scale: 0.01
+            }
+            PropertyChanges {
+                target: alert; visible: false;
+            }
+        }
+    ]
+
+    transitions: [
+        Transition {
+            to: "OPEN"
+            from: "CLOSED"
+            NumberAnimation { target: bg; property: "opacity"; easing.type: Easing.InQuad; duration: 300  }
+            NumberAnimation { target: inner; property: "scale"; easing.type: Easing.InQuad; duration: 300 }
+        },
+        Transition {
+            to: "CLOSED"
+            from: "OPEN"
+            NumberAnimation { target: bg; property: "opacity"; easing.type: Easing.OutQuad; duration: 300 }
+            NumberAnimation { target: inner; property: "scale";  easing.type: Easing.OutQuad; duration: 300 }
+            PropertyAnimation { target: alert; property: "visible"; easing.type: Easing.OutQuad; duration: 300 }
+        }
+    ]
 
     function show(txt, buttons) {
         buttonModel.clear()
@@ -31,16 +74,18 @@ Item {
             buttonModel.append({ txt: buttons[i] })
         }
         msg.text = txt
+        state = "OPEN"
         visible = true
     }
 
     function hide() {
-        visible = false
+        state = "CLOSED"
     }
 
     Rectangle {
+        id: bg
         color: "#333333"
-        opacity: 0.5
+        opacity: 0.6
         anchors.fill: parent
     }
 

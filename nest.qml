@@ -117,6 +117,7 @@ Rectangle {
     Weather {
         id: weather
         fontFamily: parent.fontFamily
+        onError: alert.show(text, ['OK'])
     }
 
     Alert {
@@ -128,6 +129,6 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        alert.show('Testing text!', ['OK', 'Cancel'])
+        //alert.show('Testing text!', ['OK', 'Cancel'])
     }
 }

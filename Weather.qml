@@ -30,6 +30,7 @@ Rectangle {
 
     property color textColor: "#000000"
     property string fontFamily: "Bariol"
+    signal error (string text)
 
     Text {
         id: currentLoc
@@ -110,5 +111,6 @@ Rectangle {
 
     onWeatherChanged: {
         weather.changed.connect(updateView)
+        weather.error.connect(error)
     }
 }
