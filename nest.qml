@@ -36,19 +36,18 @@ Rectangle {
         anchors.topMargin: 0
 
         Row {
-            width: 154
-            height: 125
+            height: 110
             anchors.verticalCenter: parent.verticalCenter
             spacing: 10
             anchors.horizontalCenter: parent.horizontalCenter
             Column {
                 x: 0
                 y: 0
-                height: 125
+                height: 110
 
                 Text {
                     id: txTemp
-                    height: 125
+                    height: 110
                     width: 80
                     text: qsTr("72°")
                     font.family: main.fontFamily
@@ -60,8 +59,8 @@ Rectangle {
             Column {
                 x: 0
                 y: 0
-                width: 60
-                height: 125
+                width: 50
+                height: 110
                 spacing: 10
 
                 function changeTemp(control) {
