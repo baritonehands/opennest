@@ -65,7 +65,7 @@ class Weather(QObject):
 
     def run(self):
         weather = pywapi.get_weather_from_yahoo(self.location(), self.units)
-        if not 'error' in weather:
+        if 'error' not in weather:
             self._current = weather
             self.changed.emit(self)
         else:
