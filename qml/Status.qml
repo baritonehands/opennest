@@ -38,7 +38,7 @@ Rectangle {
                 target: text; color: "#FFFFFF"
             }
             PropertyChanges {
-                target: icon; color: "green"; border.color: "#000000"
+                target: icon; color: "#999999"; border.color: "#000000"
             }
         }
     ]

@@ -27,10 +27,45 @@ Rectangle {
     anchors.rightMargin: 0
     anchors.left: parent.left
     anchors.leftMargin: 0
+    state: "ERROR"
 
     property color textColor: "#000000"
     property string fontFamily: "Bariol"
     signal error (string text)
+
+    states: [
+        State {
+            name: "ERROR";
+            PropertyChanges {
+                target: icon; visible: false
+            }
+            PropertyChanges {
+                target: currentTemp; visible: false
+            }
+            PropertyChanges {
+                target: highLow; visible: false
+            }
+            PropertyChanges {
+                target: currentLoc; anchors.right: parent.right; font.pixelSize: 20;
+                text: "The weather will continue to change on and off for a long, long time."
+            }
+        },
+        State {
+            name: "NORMAL";
+            PropertyChanges {
+                target: icon; visible: true
+            }
+            PropertyChanges {
+                target: currentTemp; visible: true
+            }
+            PropertyChanges {
+                target: highLow; visible: true
+            }
+            PropertyChanges {
+                target: currentLoc; anchors.right: icon.left; font.pixelSize: 24;
+            }
+        }
+    ]
 
     Text {
         id: currentLoc
@@ -98,6 +133,7 @@ Rectangle {
 
     function updateView(data) {
         if(data.weatherAvailable) {
+            state = "NORMAL"
             currentTemp.text = data.tempDisplay
             currentLoc.text = data.location
             highLow.text = '%1 \u2191<br>%2 \u2193'.arg(data.highDisplay).arg(data.lowDisplay)

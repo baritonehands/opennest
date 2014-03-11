@@ -40,7 +40,7 @@ class Weather(QObject):
         parent.setProperty('weather', self)
         self._pp = pprint.PrettyPrinter(indent=4)
         try:
-            #raise urllib2.URLError('Testing')
+            raise urllib2.URLError('Testing')
             self._loc = json.load(urllib2.urlopen('http://freegeoip.net/json', timeout=20))
             self._pp.pprint(self._loc)
         except urllib2.URLError:

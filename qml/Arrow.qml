@@ -24,12 +24,12 @@ MouseArea {
     property int direction: 1
 
     onPressed: {
-        m.children[0].color = "#82CAFA"
-        m.children[0].borderColor = "#CCCCCC"
+        m.children[0].color = "#999999"
+        m.children[0].borderColor = "#999999"
     }
 
     onReleased: {
         m.children[0].color = "#CCCCCC"
-        m.children[0].borderColor = "#82CAFA"
+        m.children[0].borderColor = "#CCCCCC"
     }
 }

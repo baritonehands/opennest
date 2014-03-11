@@ -15,7 +15,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from PyQt4.QtCore import pyqtProperty
+from PyQt4.QtCore import pyqtProperty, Qt
 from PyQt4.QtGui import QGraphicsItem, QColor, QPainter, QPainterPath, QPen
 from PyQt4.QtDeclarative import QDeclarativeItem
 
@@ -27,7 +27,7 @@ class Triangle(QDeclarativeItem):
         self.setHeight(size.height())
         self.setWidth(size.width())
         self.color = QColor("#CCCCCC")
-        self.borderColor = QColor("#82CAFA")
+        self.borderColor = QColor("#CCCCCC")
 
     @pyqtProperty(QColor)
     def color(self):
@@ -52,19 +52,20 @@ class Triangle(QDeclarativeItem):
 
         rect = self.boundingRect()
         pen = QPen(self.borderColor)
-        pen.setWidthF(3)
+        pen.setWidthF(10)
+        pen.setJoinStyle(Qt.RoundJoin)
 
         path = QPainterPath()
         if(self.parentItem().property('direction') == 1):
-            path.moveTo(0, rect.height())
-            path.lineTo(rect.width() / 2, 0)
-            path.lineTo(rect.width(), rect.height())
-            path.lineTo(0, rect.height())
+            path.moveTo(5, rect.height() - 5)
+            path.lineTo(rect.width() / 2, 5)
+            path.lineTo(rect.width() - 5, rect.height() - 5)
+            path.lineTo(5, rect.height() - 5)
         else:
-            path.moveTo(0, 0)
-            path.lineTo(rect.width() / 2, rect.height())
-            path.lineTo(rect.width(), 0)
-            path.lineTo(0, 0)
+            path.moveTo(5, 5)
+            path.lineTo(rect.width() / 2, rect.height() - 5)
+            path.lineTo(rect.width() - 5, 5)
+            path.lineTo(5, 5)
 
         painter.fillPath(path, self.color)
         painter.strokePath(path, pen)
