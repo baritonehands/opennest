@@ -105,6 +105,7 @@ Item {
         Text {
             id: msg
             text: "Your alert message goes here."
+            wrapMode: Text.Wrap
             font.pixelSize: 24
             font.family: fontFamily
             anchors.left: parent.left

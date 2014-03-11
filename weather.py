@@ -25,6 +25,8 @@ class Weather(QObject):
     changed = pyqtSignal(QObject)
     error = pyqtSignal(str)
 
+    locationMsg = 'Unable to get location.'
+
     # Map condition codes to icons. http://developer.yahoo.com/weather/#codes
     icons = ['30','30','30','27','27','26','23','26','21','21',
         '26','22','22','24','24','25','25','28','23','30',
@@ -39,31 +41,35 @@ class Weather(QObject):
         self.units = units
         parent.setProperty('weather', self)
         self._pp = pprint.PrettyPrinter(indent=4)
-        try:
-            raise urllib2.URLError('Testing')
-            self._loc = json.load(urllib2.urlopen('http://freegeoip.net/json', timeout=20))
-            self._pp.pprint(self._loc)
-        except urllib2.URLError:
-            self.error.emit('Unable to get location.')
-            self._loc = dict()
 
-    def load_weather(self):
-        if(len(self._loc.items()) == 0):
-            return dict()
-
-        if(self._loc['zipcode'] != ''):
-            zip = self._loc['zipcode']
-            return pywapi.get_weather_from_yahoo(zip, self.units)
-
-        city = (self._loc['city'], self._loc['region_code'])
-        locations = pywapi.get_location_ids('%s, %s' % city)
-        self._pp.pprint(locations)
-        if(len(locations.items()) > 0):
-            return pywapi.get_weather_from_yahoo(locations.items()[0][0], self.units)
+    def location(self):
+        if(not hasattr(self, '_loc')):
+            try:
+                raise urllib2.URLError('Testing')
+                loc = json.load(urllib2.urlopen('http://freegeoip.net/json', timeout=20))
+                #self._pp.pprint(self._loc)
+                if(loc['zipcode'] != ''):
+                    self._loc = loc['zipcode']
+                else:
+                    city = (loc['city'], loc['region_code'])
+                    locations = pywapi.get_location_ids('%s, %s' % city)
+                    self._pp.pprint(locations)
+                    if(len(locations.items()) == 0):
+                        self.error.emit(self.locationMsg)
+                        self._loc = ''
+                    self._loc = locations.items()[0][0]
+            except urllib2.URLError:
+                self.error.emit(self.locationMsg)
+                self._loc = ''
+        return self._loc
 
     def run(self):
-        self._current = self.load_weather()
-        self.changed.emit(self)
+        weather = pywapi.get_weather_from_yahoo(self.location(), self.units)
+        if not 'error' in weather:
+            self._current = weather
+            self.changed.emit(self)
+        else:
+            self.error.emit(weather['error'])
         self._t = threading.Timer(30, self.run)
         self._t.start()
         self._pp.pprint(self._current)
@@ -92,7 +98,7 @@ class Weather(QObject):
         return self.formatTemp(int(self._current['forecasts'][0]['low']))
 
     @pyqtProperty(str)
-    def location(self):
+    def locationDisplay(self):
         loc = self._current['location']
         return '%s, %s' % (loc['city'], loc['region'])
 
