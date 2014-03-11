@@ -45,7 +45,7 @@ class Weather(QObject):
     def location(self):
         if(not hasattr(self, '_loc')):
             try:
-                raise urllib2.URLError('Testing')
+                #raise urllib2.URLError('Testing')
                 loc = json.load(urllib2.urlopen('http://freegeoip.net/json', timeout=20))
                 #self._pp.pprint(self._loc)
                 if(loc['zipcode'] != ''):
