@@ -1,4 +1,4 @@
-/*  OpenNest, an open source thermostat
+﻿/*  OpenNest, an open source thermostat
     Copyright (C) 2014  Brian Gregg
 
     This program is free software: you can redistribute it and/or modify
@@ -84,7 +84,7 @@ Rectangle {
 
             Status {
                 id: fanStatus
-                fontFamily: fontFamily
+                fontFamily: main.fontFamily
                 text: "Fan"
                 anchors.left: parent.left
                 anchors.leftMargin: 0
@@ -93,7 +93,7 @@ Rectangle {
 
             Status {
                 id: heatStatus
-                fontFamily: fontFamily
+                fontFamily: main.fontFamily
                 text: "Heat"
                 anchors.right: parent.right
                 anchors.rightMargin: 0
@@ -101,7 +101,7 @@ Rectangle {
 
             Status {
                 id: coolStatus
-                fontFamily: fontFamily
+                fontFamily: main.fontFamily
                 text: "Cool"
                 anchors.right: heatStatus.left
                 anchors.rightMargin: 5
@@ -110,7 +110,7 @@ Rectangle {
 
             Clock {
                 anchors.horizontalCenter: parent.horizontalCenter
-                fontFamily: fontFamily
+                fontFamily: main.fontFamily
             }
         }
     }
@@ -123,7 +123,7 @@ Rectangle {
 
     Alert {
         id: alert
-        fontFamily: fontFamily
+        fontFamily: parent.fontFamily
         onButtonClicked: {
             console.log('Clicked ' + button)
         }
