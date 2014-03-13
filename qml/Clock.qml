@@ -20,6 +20,7 @@ Text {
     font.pixelSize: 16
     font.family: fontFamily
     text: "00:00 am"
+    smooth: true
     horizontalAlignment: Text.AlignHCenter
 
     property string fontFamily: "Bariol"
