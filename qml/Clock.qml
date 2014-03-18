@@ -31,7 +31,7 @@ Text {
         property bool on: true;
         onTriggered: {
             var time = Qt.formatTime(new Date(), "h : mm AP").toString()
-            time = time.replace(':', on ? "<font color=\"black\">:</font>" : "<font color=\"white\">:</font>")
+            time = time.replace(':', on ? "<span style=\"color: black;\">:</span>" : "<span style=\"color: rgba(0, 0, 0, 0);\">:</span>")
             parent.text = time
             on = !on
         }
