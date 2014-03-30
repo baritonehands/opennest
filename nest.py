@@ -23,6 +23,7 @@ from PyQt4.QtGui import QApplication, QGraphicsColorizeEffect, QColor
 from PyQt4.QtDeclarative import QDeclarativeView
 from triangle import *
 from weather import *
+from thermostat import *
 
 def upArrowClicked():
     print 'Testing!'
@@ -46,7 +47,10 @@ weatherView = rootObject.findChild(QObject, 'weatherView')
 weather = Weather(weatherView)
 weather.start()
 
+thermostat = None
 if(platform.system() == 'Linux'):
+    thermostat = Thermostat(rootObject)
+    thermostat.start()
     view.showFullScreen()
 else:
     view.show()
@@ -54,3 +58,5 @@ else:
 app.exec_()
 
 weather.stop()
+if(platform.system() == 'Linux'):
+    thermostat.stop()

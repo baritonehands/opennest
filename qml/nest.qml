@@ -23,6 +23,7 @@ Rectangle {
 
     property int temp: 72
     property string fontFamily: "Bariol"
+    property variant thermostat
 
     Item {
         id: item1
@@ -50,7 +51,7 @@ Rectangle {
                     id: txTemp
                     height: 110
                     width: 80
-                    text: qsTr("72°")
+                    text: "%1\u00b0".arg(temp)
                     font.family: main.fontFamily
                     verticalAlignment: Text.AlignVCenter
                     font.pixelSize: 48
@@ -65,7 +66,7 @@ Rectangle {
                 spacing: 10
 
                 function changeTemp(control) {
-                    txTemp.text = qsTr("%1\u00b0".arg(temp += control.direction))
+                    temp += control.direction
                 }
 
                 Arrow { id: upArrow; objectName: "upArrow"; direction: 1; onClicked: parent.changeTemp(upArrow); }
@@ -129,7 +130,11 @@ Rectangle {
         }
     }
 
-    Component.onCompleted: {
-        //alert.show('Testing text!', ['OK', 'Cancel'])
+    function tempChanged(temp) {
+        main.temp = temp;
+    }
+
+    onThermostatChanged: {
+        thermostat.changed.connect(tempChanged)
     }
 }
