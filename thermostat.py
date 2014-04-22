@@ -98,6 +98,6 @@ if __name__ == "__main__":
     t = Thermostat(test=True)
     t.start()
     try:
-        while True: pass
+        while True: time.sleep(1)
     except KeyboardInterrupt:
         t.stop()

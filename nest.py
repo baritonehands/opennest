@@ -16,14 +16,13 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys, platform
+import sys, platform, getopt
 
 from PyQt4.QtCore import QDateTime, QObject, QUrl, pyqtSignal
 from PyQt4.QtGui import QApplication, QGraphicsColorizeEffect, QColor
 from PyQt4.QtDeclarative import QDeclarativeView
 from triangle import *
 from weather import *
-from thermostat import *
 
 def upArrowClicked():
     print 'Testing!'
@@ -47,10 +46,27 @@ weatherView = rootObject.findChild(QObject, 'weatherView')
 weather = Weather(weatherView)
 weather.start()
 
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "f")
+except getopt.GetoptError as err:
+    # print help information and exit:
+    print str(err) # will print something like "option -a not recognized"
+    sys.exit(2)
+fullscreen = False
+for o, a in opts:
+    if o == "-f":
+        fullscreen = True
+    else:
+        assert False, "unhandled option"
+
 thermostat = None
-if(platform.system() == 'Linux'):
+try:
+    from thermostat import *
     thermostat = Thermostat(rootObject)
     thermostat.start()
+except: pass
+
+if(fullscreen):
     view.showFullScreen()
 else:
     view.show()
@@ -58,5 +74,6 @@ else:
 app.exec_()
 
 weather.stop()
-if(platform.system() == 'Linux'):
+if thermostat is not None:
     thermostat.stop()
+
