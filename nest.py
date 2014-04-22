@@ -62,7 +62,8 @@ for o, a in opts:
 thermostat = None
 try:
     from thermostat import *
-    thermostat = Thermostat(rootObject)
+    thermoView = rootObject.findChild(QObject, 'thermostatView')
+    thermostat = Thermostat(thermoView)
     thermostat.start()
 except: pass
 

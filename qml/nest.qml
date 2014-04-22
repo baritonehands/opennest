@@ -21,9 +21,7 @@ Rectangle {
     width: 320
     height: 240
 
-    property int temp: 72
     property string fontFamily: "Bariol"
-    property variant thermostat
 
     Item {
         id: item1
@@ -36,46 +34,9 @@ Rectangle {
         anchors.top: parent.top
         anchors.topMargin: 0
 
-        Row {
-            height: 110
-            anchors.top: statusBars.bottom
-            anchors.topMargin: 30
-            spacing: 10
-            anchors.horizontalCenter: parent.horizontalCenter
-            Column {
-                x: 0
-                y: 0
-                height: 110
-
-                Text {
-                    id: txTemp
-                    height: 110
-                    width: 80
-                    text: "%1\u00b0".arg(temp)
-                    font.family: main.fontFamily
-                    verticalAlignment: Text.AlignVCenter
-                    font.pixelSize: 48
-                }
-            }
-
-            Column {
-                x: 0
-                y: 0
-                width: 50
-                height: 110
-                spacing: 10
-
-                function changeTemp(control) {
-                    temp += control.direction
-                }
-
-                Arrow { id: upArrow; objectName: "upArrow"; direction: 1; onClicked: parent.changeTemp(upArrow); }
-                Arrow { id: downArrow; objectName: "downArrow"; direction: -1; onClicked: parent.changeTemp(downArrow) }
-            }
-        }
-
         Item {
             id: statusBars
+            height: 20
             anchors.top: parent.top
             anchors.topMargin: 5
             anchors.left: parent.left
@@ -114,6 +75,18 @@ Rectangle {
                 fontFamily: main.fontFamily
             }
         }
+
+        Thermostat {
+            anchors.right: parent.right
+            anchors.rightMargin: 0
+            anchors.left: parent.left
+            anchors.leftMargin: 0
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 0
+            anchors.top: statusBars.bottom
+            anchors.topMargin: 0
+            fontFamily: fontFamily
+        }
     }
 
     Weather {
@@ -130,11 +103,5 @@ Rectangle {
         }
     }
 
-    function tempChanged(temp) {
-        main.temp = temp;
-    }
 
-    onThermostatChanged: {
-        thermostat.changed.connect(tempChanged)
-    }
 }
