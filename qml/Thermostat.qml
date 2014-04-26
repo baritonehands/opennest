@@ -9,12 +9,12 @@ Rectangle {
     property int temp: 72
     property variant thermostat
 
-    function tempChanged() {
+    function updateTemp() {
         temp = thermostat.temp;
     }
 
     onThermostatChanged: {
-        thermostat.changed.connect(tempChanged)
+        thermostat.changed.connect(updateTemp)
     }
 
     Item {
