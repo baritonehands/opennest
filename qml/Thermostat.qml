@@ -18,7 +18,7 @@ Rectangle {
     }
 
     Item {
-        width: 160
+        width: parent.width * 0.5
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.left: parent.left
@@ -30,16 +30,49 @@ Rectangle {
             id: txTemp
             text: "%1\u00b0".arg(temp)
             horizontalAlignment: Text.AlignHCenter
-            anchors.fill: parent
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
             font.family: fontFamily
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: 64
         }
+
+        Status {
+            id: heatStatus
+            fontFamily: fontFamily
+            text: "Heat"
+            anchors.left: txTemp.left
+            anchors.leftMargin: 0
+            anchors.top: txTemp.bottom
+            anchors.topMargin: 0
+            state: "OFF"
+        }
+
+        Status {
+            id: coolStatus
+            fontFamily: fontFamily
+            text: "Cool"
+            anchors.left: heatStatus.right
+            anchors.leftMargin: 5
+            anchors.top: txTemp.bottom
+            anchors.topMargin: 0
+            state: "ON"
+        }
+
+        Status {
+            id: fanStatus
+            fontFamily: fontFamily
+            text: "Fan"
+            anchors.left: coolStatus.right
+            anchors.leftMargin: 5
+            anchors.top: txTemp.bottom
+            anchors.topMargin: 0
+            state: "ON"
+        }
     }
 
     Item {
-        id: item1
-        width: 160
+        width: parent.width * 0.5
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.right: parent.right
@@ -55,7 +88,7 @@ Rectangle {
             anchors.horizontalCenterOffset: -20
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            horizontalAlignment: Text.AlignLeft
+            horizontalAlignment: Text.AlignHCenter
             font.family: fontFamily
             verticalAlignment: Text.AlignVCenter
             font.pixelSize: 40

@@ -21,6 +21,7 @@ Text {
     font.family: fontFamily
     text: "00:00 am"
     smooth: true
+    textFormat: Text.RichText
     horizontalAlignment: Text.AlignHCenter
 
     property string fontFamily: "Bariol"

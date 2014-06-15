@@ -21,12 +21,7 @@ Rectangle {
     height: 60
     color: "#82CAFA"
     objectName: "weatherView"
-    anchors.bottom: parent.bottom
-    anchors.bottomMargin: 0
-    anchors.right: parent.right
-    anchors.rightMargin: 0
-    anchors.left: parent.left
-    anchors.leftMargin: 0
+
     state: "ERROR"
 
     property color textColor: "#000000"

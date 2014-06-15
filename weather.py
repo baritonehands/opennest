@@ -53,7 +53,7 @@ class Weather(QObject):
                 else:
                     city = (loc['city'], loc['region_code'])
                     locations = pywapi.get_location_ids('%s, %s' % city)
-                    self._pp.pprint(locations)
+                    #self._pp.pprint(locations)
                     if(len(locations.items()) == 0):
                         self.error.emit(self.locationMsg)
                         self._loc = ''
@@ -64,15 +64,18 @@ class Weather(QObject):
         return self._loc
 
     def run(self):
-        weather = pywapi.get_weather_from_yahoo(self.location(), self.units)
-        if 'error' not in weather:
-            self._current = weather
-            self.changed.emit(self)
-        else:
-            self.error.emit(weather['error'])
+        try:
+            weather = pywapi.get_weather_from_yahoo(self.location(), self.units)
+            if 'error' not in weather:
+                self._current = weather
+                self.changed.emit(self)
+            else:
+                self.error.emit(weather['error'])
+        except:
+            self.error.emit('Could not retrieve weather.')
         self._t = threading.Timer(30, self.run)
         self._t.start()
-        self._pp.pprint(self._current)
+        #self._pp.pprint(self._current)
 
     @pyqtProperty(bool)
     def weatherAvailable(self):

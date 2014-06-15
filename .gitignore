@@ -1,3 +1,4 @@
 *.pyc
 icons/*.svg
 *.autosave
+build-*

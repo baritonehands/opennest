@@ -23,16 +23,19 @@ Rectangle {
 
     property string fontFamily: "Bariol"
 
+    Settings {
+        id: settings
+    }
+
     Item {
         id: item1
-        anchors.right: parent.right
-        anchors.rightMargin: 0
-        anchors.left: parent.left
+        anchors.left: settings.right
         anchors.leftMargin: 0
         anchors.bottom: weather.top
         anchors.bottomMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
+        width: parent.width
 
         Item {
             id: statusBars
@@ -44,30 +47,9 @@ Rectangle {
             anchors.right: parent.right
             anchors.rightMargin: 5
 
-            Status {
-                id: fanStatus
-                fontFamily: main.fontFamily
-                text: "Fan"
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                state: "ON"
-            }
-
-            Status {
-                id: heatStatus
-                fontFamily: main.fontFamily
-                text: "Heat"
-                anchors.right: parent.right
-                anchors.rightMargin: 0
-            }
-
-            Status {
-                id: coolStatus
-                fontFamily: main.fontFamily
-                text: "Cool"
-                anchors.right: heatStatus.left
-                anchors.rightMargin: 5
-                state: "OFF"
+            Button {
+                text: "Settings"
+                onClicked: settings.toggle()
             }
 
             Clock {
@@ -91,6 +73,11 @@ Rectangle {
 
     Weather {
         id: weather
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: 0
+        anchors.left: settings.right
+        anchors.leftMargin: 0
+        width: parent.width
         fontFamily: parent.fontFamily
         onError: alert.show(text, ['OK'])
     }
