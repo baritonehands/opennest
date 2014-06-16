@@ -32,7 +32,7 @@ Rectangle {
         State {
             name: "ERROR";
             PropertyChanges {
-                target: icon; visible: false
+                target: icon; visible: true
             }
             PropertyChanges {
                 target: currentTemp; visible: false
@@ -83,7 +83,7 @@ Rectangle {
     Image {
         id: icon
         objectName: "icon"
-        source: "../icons/sw-12.svg"
+        source: "../icons/simple_weather_icon_12.png"
         width: 36
         fillMode: Image.PreserveAspectFit
         smooth: true
@@ -132,7 +132,7 @@ Rectangle {
             currentTemp.text = data.tempDisplay
             currentLoc.text = data.locationDisplay
             highLow.text = '%1 \u2191<br>%2 \u2193'.arg(data.highDisplay).arg(data.lowDisplay)
-            icon.source = '../icons/sw-%1.svg'.arg(data.conditionIcon)
+            icon.source = '../icons/simple_weather_icon_%1.png'.arg(data.conditionIcon)
             console.log(data.tempDisplay)
         }
     }

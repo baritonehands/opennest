@@ -1,4 +1,4 @@
 *.pyc
-icons/*.svg
+icons/*.png
 *.autosave
 build-*
