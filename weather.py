@@ -38,7 +38,7 @@ class Weather(QObject):
         QObject.__init__(self, parent)
         self._t = None
         self._current = dict()
-        self.units = units
+        self._units = units
         parent.setProperty('weather', self)
         self._pp = pprint.PrettyPrinter(indent=4)
 
@@ -80,6 +80,16 @@ class Weather(QObject):
     @pyqtProperty(bool)
     def weatherAvailable(self):
         return len(self._current.keys()) > 0
+
+    @pyqtProperty(str)
+    def units(self):
+        return self._units
+
+    @units.setter
+    def units(self, value):
+        self._units = value
+        self.stop()
+        self.start()
 
     @pyqtProperty(int)
     def temp(self):

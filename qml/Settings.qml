@@ -25,10 +25,49 @@ Rectangle {
     state: "CLOSED"
 
     property string fontFamily: "Bariol"
+    signal unitsChanged(string units)
 
-    SegmentedControl {
+    Column {
+        spacing: 10
         width: parent.width - 20
-        buttons: ["\u00b0 F", "\u00b0 C"]
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.verticalCenter: parent.verticalCenter
+
+        Column {
+            spacing: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            Text {
+                font.family: fontFamily
+                font.pixelSize: 16
+                text: "Units:"
+                color: "white"
+            }
+
+            SegmentedControl {
+                buttons: ["\u00b0 F", "\u00b0 C"]
+                onSelectedIndexChanged: {
+                    unitsChanged(selectedIndex == 0 ? 'imperial' : 'metric')
+                }
+            }
+        }
+
+        Column {
+            spacing: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            Text {
+                font.family: fontFamily
+                font.pixelSize: 16
+                text: "Away:"
+                color: "white"
+            }
+
+            SegmentedControl {
+                buttons: ["Off", "On"]
+                onSelectedIndexChanged: {
+                    //unitsChanged(selectedIndex == 0 ? 'imperial' : 'metric')
+                }
+            }
+        }
     }
 
     states: [

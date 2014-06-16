@@ -66,20 +66,17 @@ MouseArea {
 
     onLrcChanged: {
         if(lrc == 0) {
-            console.log('middle button')
             round.visible = false
             bg.anchors.right = right
             bg.anchors.left = left
         }
         else if(lrc == -1) {
-            console.log('left button')
             round.visible = true
             round.anchors.left = left
             bg.anchors.right = right
             bg.anchors.left = round.horizontalCenter
         }
         else if(lrc == 1) {
-            console.log('right button')
             round.visible = true
             round.anchors.right = right
             bg.anchors.right = round.horizontalCenter

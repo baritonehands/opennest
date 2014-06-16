@@ -25,6 +25,10 @@ Rectangle {
 
     Settings {
         id: settings
+        onUnitsChanged: {
+            weather.weather.units = units
+            //thermostat.thermostat.units = units
+        }
     }
 
     Item {
@@ -59,6 +63,7 @@ Rectangle {
         }
 
         Thermostat {
+            id: thermostat
             anchors.right: parent.right
             anchors.rightMargin: 0
             anchors.left: parent.left
