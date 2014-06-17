@@ -32,7 +32,7 @@ Rectangle {
         State {
             name: "ERROR";
             PropertyChanges {
-                target: icon; visible: true
+                target: icon; visible: false
             }
             PropertyChanges {
                 target: currentTemp; visible: false

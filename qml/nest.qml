@@ -51,8 +51,9 @@ Rectangle {
             anchors.right: parent.right
             anchors.rightMargin: 5
 
-            Button {
-                text: "Settings"
+            ImageButton {
+                width: 20; height: 20
+                source: "../icons/settings.png"
                 onClicked: settings.toggle()
             }
 
