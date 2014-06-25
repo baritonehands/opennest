@@ -30,10 +30,15 @@ class Thermostat(QObject):
         QObject.__init__(self, parent)
         self._t = None
         self._test = test
-        self._temp = (None, None)
+        self._temp = (0, 0)
+        self._history = []
+        self._hilo = (75, 68)
+        self._state = [False, False, False]
         self.units = units
         if parent is not None:
             parent.setProperty('thermostat', self)
+            
+        self.changed.connect(self.onChange)
 
         base_dir = '/sys/bus/w1/devices/'
         device_folder = glob.glob(base_dir + '10-*')[0]
@@ -41,15 +46,46 @@ class Thermostat(QObject):
         
         GPIO.setmode(GPIO.BCM)
         GPIO.setup(self.HEAT, GPIO.OUT)
-        GPIO.output(self.HEAT, False)
+        GPIO.output(self.HEAT, self._state[0])
         GPIO.setup(self.COOL, GPIO.OUT)
-        GPIO.output(self.COOL, False)
+        GPIO.output(self.COOL, self._state[1])
         GPIO.setup(self.FAN, GPIO.OUT)
-        GPIO.output(self.FAN, False)
+        GPIO.output(self.FAN, self._state[2])
+    
+    @pyqtProperty(bool)
+    def heat(self):
+        return self._state[0]
+    
+    @heat.setter
+    def heat(self, value):
+        self._state[0] = value
+        GPIO.output(self.HEAT, value)
+    
+    @pyqtProperty(bool)
+    def cool(self):
+        return self._state[1]
+    
+    @cool.setter
+    def cool(self, value):
+        self._state[1] = value
+        GPIO.output(self.COOL, value)
+    
+    @pyqtProperty(bool)
+    def fan(self):
+        return self._state[2]
+    
+    @fan.setter
+    def fan(self, value):
+        self._state[2] = value
+        GPIO.output(self.FAN, value)
 
     def run(self):
         self._temp = self.read_temp()
+        self._history.append(self._temp[0])
+        while len(self._history) > 5:
+            self._history.pop(0)
         self._t = threading.Timer(1, self.run)
+        self._t.daemon = True
         self._t.start()
     
     @pyqtProperty(int)
@@ -83,21 +119,52 @@ class Thermostat(QObject):
             return (temp_c, temp_f)
             
         return self._temp
+    
+    def onChange(self):
+        if self._test: print '%i C' % self._temp[0]
+        if self._temp[0] < 19.5:
+            self.heat = True
+            self.cool = False
+            self.fan = False
+        elif self._temp[0] > 24:
+            self.heat = False
+            self.cool = True
+            self.fan = True
+        else:
+            self.heat = False
+            self.cool = False
+            self.fan = False
 
     def start(self):
-        self.stop()
+        self.stop()        
         self.run()
 
     def stop(self):
         if(self._t is not None):
+            print 'Stopping thread...'
             self._t.cancel()
             self._t = None
+            GPIO.output(self.HEAT, False)
+            GPIO.output(self.COOL, False)
+            GPIO.output(self.FAN, False)
 
 if __name__ == "__main__":
+    from PyQt4.QtCore import QCoreApplication
+    import sys, pdb
+    
+    app = QCoreApplication(sys.argv)
+    
     # Testing the thermostat on the console
-    t = Thermostat(test=True)
+    t = Thermostat(parent=app, test=True)
     t.start()
-    try:
-        while True: time.sleep(1)
-    except KeyboardInterrupt:
-        t.stop()
+    
+    def uncaught(type, value, traceback):
+        print type, value, traceback
+        QCoreApplication.quit()
+        
+    sys.excepthook = uncaught
+    
+    app.exec_()
+    
+    print 'Stopping...'
+    t.stop()
