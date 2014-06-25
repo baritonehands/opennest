@@ -34,7 +34,7 @@ class Thermostat(QObject):
         self._history = []
         self._hilo = (75, 68)
         self._state = [False, False, False]
-        self.units = units
+        self._units = units
         if parent is not None:
             parent.setProperty('thermostat', self)
             
@@ -78,6 +78,16 @@ class Thermostat(QObject):
     def fan(self, value):
         self._state[2] = value
         GPIO.output(self.FAN, value)
+        
+    @pyqtProperty(str)
+    def units(self):
+        return self._units
+
+    @units.setter
+    def units(self, value):
+        self._units = value
+        self.stop()
+        self.start()
 
     def run(self):
         self._temp = self.read_temp()

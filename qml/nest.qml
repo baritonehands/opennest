@@ -27,7 +27,9 @@ Rectangle {
         id: settings
         onUnitsChanged: {
             weather.weather.units = units
-            //thermostat.thermostat.units = units
+            if(thermostat.thermostat) {
+                thermostat.thermostat.units = units
+            }
         }
     }
 
