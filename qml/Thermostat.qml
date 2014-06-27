@@ -7,10 +7,12 @@ Rectangle {
     objectName: "thermostatView"
     property string fontFamily: "Bariol"
     property int temp: 72
+    property int setTemp: 72
     property variant thermostat
 
     function updateTemp() {
         temp = thermostat.temp;
+        setTemp = thermostat.setTemp;
         heatStatus.state = thermostat.heat ? "ON" : "OFF"
         coolStatus.state = thermostat.cool ? "ON" : "OFF"
         fanStatus.state = thermostat.fan ? "ON" : "OFF"
@@ -86,7 +88,7 @@ Rectangle {
             id: txSetPoint
             width: 70
             height: font.pixelSize
-            text: "%1\u00b0".arg(temp)
+            text: "%1\u00b0".arg(setTemp)
             anchors.horizontalCenterOffset: -30
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
@@ -104,7 +106,7 @@ Rectangle {
             spacing: 10
 
             function changeTemp(control) {
-                temp += control.direction
+                thermostat.setTemp += control.direction
             }
 
             Arrow { id: upArrow; objectName: "upArrow"; direction: 1; onClicked: parent.changeTemp(upArrow); }

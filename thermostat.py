@@ -25,6 +25,8 @@ class Thermostat(QObject):
     HEAT = 17
     COOL = 18
     FAN = 22
+    
+    HIST = 10
 
     def __init__(self, parent=None, units='imperial', test=False):
         QObject.__init__(self, parent)
@@ -32,7 +34,7 @@ class Thermostat(QObject):
         self._test = test
         self._temp = (0, 0)
         self._history = []
-        self._hilo = (75, 68)
+        self._hilo = (22, 20)
         self._state = [False, False, False]
         self._units = units
         if parent is not None:
@@ -88,20 +90,51 @@ class Thermostat(QObject):
         self._units = value
         self.stop()
         self.start()
-
-    def run(self):
-        self._temp = self.read_temp()
-        self._history.append(self._temp[0])
-        while len(self._history) > 5:
-            self._history.pop(0)
-        self._t = threading.Timer(1, self.run)
-        self._t.daemon = True
-        self._t.start()
     
     @pyqtProperty(int)
     def temp(self):
         if(self.units == 'imperial'): return int(self._temp[1])
         return int(self._temp[0])
+        
+    @pyqtProperty(int)
+    def setTemp(self):
+        (hi, low) = self._hilo
+        mid = (hi + low) / 2.0;
+        value = self._temp[0]
+        if value >= mid:
+            return self.convertToDisp(hi)
+        elif value < mid:
+            return self.convertToDisp(low)
+    
+    @setTemp.setter
+    def setTemp(self, value):
+        (hi, low) = self._hilo
+        mid = (hi + low) / 2.0;
+        if value >= mid and value >= low:
+            self._hilo[0] = self.convertFromDisp(value)
+            self.changed.emit(self)
+        elif value < mid and value <= hi:
+            self._hilo[1] = self.convertFromDisp(value)
+            self.changed.emit(self)
+    
+    def convertFromDisp(self, t):
+        if self.units == 'imperial':
+            return (t - 32.0) * 5.0 / 9.0
+        return t
+    
+    def convertToDisp(self, t):
+        if self.units == 'imperial':
+            return t * 9.0 / 5.0 + 32.0
+        return t
+
+    def run(self):
+        self._temp = self.read_temp()
+        self._history.append(self._temp[0])
+        while len(self._history) > self.HIST:
+            self._history.pop(0)
+        self._t = threading.Timer(1, self.run)
+        self._t.daemon = True
+        self._t.start()
 
     def read_temp_raw(self):
         f = open(self.device_file, 'r')
@@ -120,10 +153,10 @@ class Thermostat(QObject):
             temp_string = lines[1][equals_pos+2:]
             temp_c = float(temp_string) / 1000.0
             
-            if self.units == 'metric' and self._test: print '%i C' % temp_c
+            if self.units == 'metric' and self._test: print '%f C' % temp_c
             
             temp_f = temp_c * 9.0 / 5.0 + 32.0
-            if self.units == 'imperial' and self._test: print '%i F' % temp_f 
+            if self.units == 'imperial' and self._test: print '%f F' % temp_f 
             self.changed.emit(self)
             
             return (temp_c, temp_f)
@@ -131,12 +164,12 @@ class Thermostat(QObject):
         return self._temp
     
     def onChange(self):
-        if self._test: print '%i C' % self._temp[0]
-        if self._temp[0] < 19.5:
+        if self._test: print '%f C' % self._temp[0], self._hilo, self._history
+        if all(t < (self._hilo[1] - 0.5) for t in self._history):
             self.heat = True
             self.cool = False
             self.fan = False
-        elif self._temp[0] > 24:
+        elif all(t > (self._hilo[0] + 0.5) for t in self._history):
             self.heat = False
             self.cool = True
             self.fan = True
