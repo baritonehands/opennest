@@ -87,7 +87,7 @@ Rectangle {
             width: 70
             height: font.pixelSize
             text: "%1\u00b0".arg(temp)
-            anchors.horizontalCenterOffset: -20
+            anchors.horizontalCenterOffset: -30
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignHCenter
@@ -98,7 +98,7 @@ Rectangle {
 
         Column {
             width: 50
-            anchors.horizontalCenterOffset: 30
+            anchors.horizontalCenterOffset: 35
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: txSetPoint.verticalCenter
             spacing: 10
