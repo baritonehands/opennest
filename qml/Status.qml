@@ -54,7 +54,7 @@ Rectangle {
     Text {
         id: text
         text: parent.text
-        font.pixelSize: 16
+        font.pixelSize: 14
         font.family: fontFamily
         font.bold: true
         horizontalAlignment: Text.AlignHCenter

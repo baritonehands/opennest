@@ -57,12 +57,12 @@ Rectangle {
             Text {
                 font.family: fontFamily
                 font.pixelSize: 16
-                text: "Away:"
+                text: "Fan:"
                 color: "white"
             }
 
             SegmentedControl {
-                buttons: ["Off", "On"]
+                buttons: ["Auto", "On"]
                 onSelectedIndexChanged: {
                     //unitsChanged(selectedIndex == 0 ? 'imperial' : 'metric')
                 }

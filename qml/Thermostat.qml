@@ -11,6 +11,9 @@ Rectangle {
 
     function updateTemp() {
         temp = thermostat.temp;
+        heatStatus.state = thermostat.heat ? "ON" : "OFF"
+        coolStatus.state = thermostat.cool ? "ON" : "OFF"
+        fanStatus.state = thermostat.fan ? "ON" : "OFF"
     }
 
     onThermostatChanged: {
@@ -41,8 +44,8 @@ Rectangle {
             id: heatStatus
             fontFamily: fontFamily
             text: "Heat"
-            anchors.left: txTemp.left
-            anchors.leftMargin: 0
+            anchors.right: coolStatus.left
+            anchors.rightMargin: 5
             anchors.top: txTemp.bottom
             anchors.topMargin: 0
             state: "OFF"
@@ -52,8 +55,7 @@ Rectangle {
             id: coolStatus
             fontFamily: fontFamily
             text: "Cool"
-            anchors.left: heatStatus.right
-            anchors.leftMargin: 5
+            anchors.horizontalCenter: txTemp.horizontalCenter
             anchors.top: txTemp.bottom
             anchors.topMargin: 0
             state: "ON"
