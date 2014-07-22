@@ -34,7 +34,7 @@ class Thermostat(QObject):
         self._test = test
         self._temp = (0, 0)
         self._history = []
-        self._hilo = (22, 20)
+        self._hilo = [40.0 * 5.0 / 9.0, 20]
         self._state = [False, False, False]
         self._units = units
         if parent is not None:
@@ -75,7 +75,7 @@ class Thermostat(QObject):
     @pyqtProperty(bool)
     def fan(self):
         return self._state[2]
-    
+    s
     @fan.setter
     def fan(self, value):
         self._state[2] = value
@@ -88,6 +88,12 @@ class Thermostat(QObject):
     @units.setter
     def units(self, value):
         self._units = value
+        if value == 'metric':
+            self._hilo[0] = round(self._hilo[0])
+            self._hilo[1] = round(self._hilo[1])
+        else:
+            self._hilo[0] = self.convertFromDisp(round(self.convertToDisp(self._hilo[0])))
+            self._hilo[1] = self.convertFromDisp(round(self.convertToDisp(self._hilo[1])))
         self.stop()
         self.start()
     
@@ -112,9 +118,11 @@ class Thermostat(QObject):
         mid = (hi + low) / 2.0;
         if value >= mid and value >= low:
             self._hilo[0] = self.convertFromDisp(value)
+            if(self._hilo[0] < self._hilo[1]): self._hilo[1] = self._hilo[0]
             self.changed.emit(self)
         elif value < mid and value <= hi:
             self._hilo[1] = self.convertFromDisp(value)
+            if(self._hilo[1] > self._hilo[0]): self._hilo[0] = self._hilo[1]
             self.changed.emit(self)
     
     def convertFromDisp(self, t):
@@ -177,6 +185,7 @@ class Thermostat(QObject):
             self.heat = False
             self.cool = False
             self.fan = False
+        #print self._hilo
 
     def start(self):
         self.stop()        
