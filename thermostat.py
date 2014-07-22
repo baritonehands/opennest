@@ -75,7 +75,7 @@ class Thermostat(QObject):
     @pyqtProperty(bool)
     def fan(self):
         return self._state[2]
-    s
+    
     @fan.setter
     def fan(self, value):
         self._state[2] = value
