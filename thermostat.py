@@ -37,6 +37,7 @@ class Thermostat(QObject):
         self._hilo = [40.0 * 5.0 / 9.0, 20]
         self._state = [False, False, False]
         self._units = units
+        self._auto = True
         if parent is not None:
             parent.setProperty('thermostat', self)
             
@@ -80,6 +81,15 @@ class Thermostat(QObject):
     def fan(self, value):
         self._state[2] = value
         GPIO.output(self.FAN, value)
+    
+    @pyqtProperty(bool)
+    def auto(self):
+        return self._auto
+    
+    @auto.setter
+    def auto(self, value):
+        self._auto = value
+        self.changed.emit(self)
         
     @pyqtProperty(str)
     def units(self):
@@ -176,7 +186,7 @@ class Thermostat(QObject):
         if all(t < (self._hilo[1] - 0.5) for t in self._history):
             self.heat = True
             self.cool = False
-            self.fan = False
+            self.fan = not self._auto
         elif all(t > (self._hilo[0] + 0.5) for t in self._history):
             self.heat = False
             self.cool = True
@@ -184,7 +194,7 @@ class Thermostat(QObject):
         else:
             self.heat = False
             self.cool = False
-            self.fan = False
+            self.fan = not self._auto
         #print self._hilo
 
     def start(self):

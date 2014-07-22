@@ -31,6 +31,11 @@ Rectangle {
                 thermostat.thermostat.units = units
             }
         }
+        onFanChanged: {
+            if(thermostat.thermostat) {
+                thermostat.thermostat.auto = auto
+            }
+        }
     }
 
     Item {

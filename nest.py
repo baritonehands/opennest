@@ -69,6 +69,7 @@ except: pass
 
 if(fullscreen):
     view.showFullScreen()
+    app.setOverrideCursor(Qt.BlankCursor)
 else:
     view.show()
 

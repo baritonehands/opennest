@@ -26,6 +26,7 @@ Rectangle {
 
     property string fontFamily: "Bariol"
     signal unitsChanged(string units)
+    signal fanChanged(bool auto)
 
     Column {
         spacing: 10
@@ -64,7 +65,7 @@ Rectangle {
             SegmentedControl {
                 buttons: ["Auto", "On"]
                 onSelectedIndexChanged: {
-                    //unitsChanged(selectedIndex == 0 ? 'imperial' : 'metric')
+                    fanChanged(selectedIndex == 0 ? true : false)
                 }
             }
         }
