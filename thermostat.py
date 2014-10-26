@@ -97,7 +97,7 @@ class Thermostat(QObject):
         self._auto = value
         self.changed.emit(self)
 
-    @pyqtProperty(bool)
+    @pyqtProperty(int)
     def mode(self):
         return self._mode
 
@@ -190,18 +190,18 @@ class Thermostat(QObject):
     
     def onChange(self):
         if self._test: print '%f C' % self._temp[0], self._set, self._history
-        if all(t < (self._set - 0.5) for t in self._history):
+        if self._mode == 1 and all(t < (self._set - 0.5) for t in self._history):
             self.heat = True
             self.cool = False
             self.fan = not self._auto
-        elif all(t > (self._set + 0.5) for t in self._history):
+        elif self._mode == -1 and all(t > (self._set + 0.5) for t in self._history):
             self.heat = False
             self.cool = True
             self.fan = True
         else:
             self.heat = False
             self.cool = False
-            self.fan = not self._auto
+            self.fan = False if self._mode == 0 else not self._auto
     
     def eventFilter(self, obj, event):
         if event.type() == QEvent.MouseButtonPress:
