@@ -68,6 +68,8 @@ try:
 except: pass
 
 if(fullscreen):
+    if thermostat is not None:
+        view.installEventFilter(thermostat)
     view.showFullScreen()
     app.setOverrideCursor(Qt.BlankCursor)
 else:

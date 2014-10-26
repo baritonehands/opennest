@@ -16,8 +16,8 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import threading, glob, time, math
-from PyQt4.QtCore import QObject, pyqtProperty, pyqtSignal
+import threading, glob, time, math, os
+from PyQt4.QtCore import QObject, QEvent, pyqtProperty, pyqtSignal
 import RPi.GPIO as GPIO
 
 class Thermostat(QObject):
@@ -25,6 +25,7 @@ class Thermostat(QObject):
     HEAT = 17
     COOL = 18
     FAN = 22
+    LIGHT = 252
     
     HIST = 10
 
@@ -34,10 +35,12 @@ class Thermostat(QObject):
         self._test = test
         self._temp = (0, 0)
         self._history = []
-        self._hilo = [40.0 * 5.0 / 9.0, 20]
+        self._set = 38.0 * 5.0 / 9.0
         self._state = [False, False, False]
         self._units = units
         self._auto = True
+        self._secondsSinceTouch = 0
+        self._lightOn = True
         if parent is not None:
             parent.setProperty('thermostat', self)
             
@@ -54,6 +57,8 @@ class Thermostat(QObject):
         GPIO.output(self.COOL, self._state[1])
         GPIO.setup(self.FAN, GPIO.OUT)
         GPIO.output(self.FAN, self._state[2])
+        os.system("echo 'out' > /sys/class/gpio/gpio%i/direction" % self.LIGHT)
+        self.light(self._lightOn)
     
     @pyqtProperty(bool)
     def heat(self):
@@ -99,11 +104,9 @@ class Thermostat(QObject):
     def units(self, value):
         self._units = value
         if value == 'metric':
-            self._hilo[0] = round(self._hilo[0])
-            self._hilo[1] = round(self._hilo[1])
+            self._set = round(self._set)
         else:
-            self._hilo[0] = self.convertFromDisp(round(self.convertToDisp(self._hilo[0])))
-            self._hilo[1] = self.convertFromDisp(round(self.convertToDisp(self._hilo[1])))
+            self._set = self.convertFromDisp(round(self.convertToDisp(self._set)))
         self.stop()
         self.start()
     
@@ -114,26 +117,12 @@ class Thermostat(QObject):
         
     @pyqtProperty(int)
     def setTemp(self):
-        (hi, low) = self._hilo
-        mid = (hi + low) / 2.0;
-        value = self._temp[0]
-        if value >= mid:
-            return self.convertToDisp(hi)
-        elif value < mid:
-            return self.convertToDisp(low)
+        return self.convertToDisp(self._set)
     
     @setTemp.setter
     def setTemp(self, value):
-        (hi, low) = self._hilo
-        mid = (hi + low) / 2.0;
-        if value >= mid and value >= low:
-            self._hilo[0] = self.convertFromDisp(value)
-            if(self._hilo[0] < self._hilo[1]): self._hilo[1] = self._hilo[0]
-            self.changed.emit(self)
-        elif value < mid and value <= hi:
-            self._hilo[1] = self.convertFromDisp(value)
-            if(self._hilo[1] > self._hilo[0]): self._hilo[0] = self._hilo[1]
-            self.changed.emit(self)
+        self._set = self.convertFromDisp(value)
+        self.changed.emit(self)
     
     def convertFromDisp(self, t):
         if self.units == 'imperial':
@@ -153,6 +142,14 @@ class Thermostat(QObject):
         self._t = threading.Timer(1, self.run)
         self._t.daemon = True
         self._t.start()
+        self._secondsSinceTouch += 1
+        if self._secondsSinceTouch > 30 and self._lightOn:
+        	self.light(False)
+    
+    def light(self, val):
+    	os.system("echo '%i' > /sys/class/gpio/gpio%i/value" % (int(val), self.LIGHT))
+    	self._lightOn = val
+    	if val: self._secondsSinceTouch = 0
 
     def read_temp_raw(self):
         f = open(self.device_file, 'r')
@@ -182,12 +179,12 @@ class Thermostat(QObject):
         return self._temp
     
     def onChange(self):
-        if self._test: print '%f C' % self._temp[0], self._hilo, self._history
-        if all(t < (self._hilo[1] - 0.5) for t in self._history):
+        if self._test: print '%f C' % self._temp[0], self._set, self._history
+        if all(t < (self._set - 0.5) for t in self._history):
             self.heat = True
             self.cool = False
             self.fan = not self._auto
-        elif all(t > (self._hilo[0] + 0.5) for t in self._history):
+        elif all(t > (self._set + 0.5) for t in self._history):
             self.heat = False
             self.cool = True
             self.fan = True
@@ -195,7 +192,11 @@ class Thermostat(QObject):
             self.heat = False
             self.cool = False
             self.fan = not self._auto
-        #print self._hilo
+    
+    def eventFilter(self, obj, event):
+        if event.type() == QEvent.MouseButtonPress:
+            self.light(True)
+        return False
 
     def start(self):
         self.stop()        
