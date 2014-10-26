@@ -32,7 +32,7 @@ MouseArea {
                 target: text; color: "#333333"
             }
             PropertyChanges {
-                target: bg; color: "#CCCCCC";
+                target: bg; color: "#CCCCCC"; border.color: "#CCCCCC"
             }
             PropertyChanges {
                 target: round; color: "#CCCCCC";
@@ -44,7 +44,7 @@ MouseArea {
                 target: text; color: "#FFFFFF"
             }
             PropertyChanges {
-                target: bg; color: "#82CAFA";
+                target: bg; color: "#82CAFA"; border.color: "#82CAFA";
             }
             PropertyChanges {
                 target: round; color: "#82CAFA";
@@ -56,7 +56,7 @@ MouseArea {
                 target: text; color: "#FFFFFF"
             }
             PropertyChanges {
-                target: bg; color: "transparent";
+                target: bg; color: "transparent"; border.color: "#82CAFA";
             }
             PropertyChanges {
                 target: round; color: "transparent";
@@ -69,18 +69,21 @@ MouseArea {
             round.visible = false
             bg.anchors.right = right
             bg.anchors.left = left
+            bg.border.width = 1;
         }
         else if(lrc == -1) {
             round.visible = true
             round.anchors.left = left
             bg.anchors.right = right
             bg.anchors.left = round.horizontalCenter
+            bg.border.width = 0;
         }
         else if(lrc == 1) {
             round.visible = true
             round.anchors.right = right
             bg.anchors.right = round.horizontalCenter
             bg.anchors.left = left
+            bg.border.width = 0;
         }
     }
 

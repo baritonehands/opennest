@@ -27,6 +27,7 @@ Rectangle {
     property string fontFamily: "Bariol"
     signal unitsChanged(string units)
     signal fanChanged(bool auto)
+    signal modeChanged(int mode)
 
     Column {
         spacing: 10
@@ -40,14 +41,15 @@ Rectangle {
             Text {
                 font.family: fontFamily
                 font.pixelSize: 16
-                text: "Units:"
+                text: "Mode:"
                 color: "white"
             }
 
             SegmentedControl {
-                buttons: ["\u00b0 F", "\u00b0 C"]
+                buttons: ["Off", "Heat", "Cool"]
+                selectedIndex: 1
                 onSelectedIndexChanged: {
-                    unitsChanged(selectedIndex == 0 ? 'imperial' : 'metric')
+                    modeChanged(selectedIndex == 0 ? 0 : (selectedIndex == 1 ? 1 : -1))
                 }
             }
         }
@@ -66,6 +68,24 @@ Rectangle {
                 buttons: ["Auto", "On"]
                 onSelectedIndexChanged: {
                     fanChanged(selectedIndex == 0 ? true : false)
+                }
+            }
+        }
+
+        Column {
+            spacing: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            Text {
+                font.family: fontFamily
+                font.pixelSize: 16
+                text: "Units:"
+                color: "white"
+            }
+
+            SegmentedControl {
+                buttons: ["\u00b0 F", "\u00b0 C"]
+                onSelectedIndexChanged: {
+                    unitsChanged(selectedIndex == 0 ? 'imperial' : 'metric')
                 }
             }
         }

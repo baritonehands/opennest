@@ -39,6 +39,7 @@ class Thermostat(QObject):
         self._state = [False, False, False]
         self._units = units
         self._auto = True
+        self._mode = 1
         self._secondsSinceTouch = 0
         self._lightOn = True
         if parent is not None:
@@ -94,6 +95,15 @@ class Thermostat(QObject):
     @auto.setter
     def auto(self, value):
         self._auto = value
+        self.changed.emit(self)
+
+    @pyqtProperty(bool)
+    def mode(self):
+        return self._mode
+
+    @mode.setter
+    def mode(self, value):
+        self._mode = value
         self.changed.emit(self)
         
     @pyqtProperty(str)

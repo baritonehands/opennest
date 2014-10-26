@@ -36,6 +36,11 @@ Rectangle {
                 thermostat.thermostat.auto = auto
             }
         }
+        onModeChanged: {
+            if(thermostat.thermostat) {
+                thermostat.thermostat.mode = mode
+            }
+        }
     }
 
     Item {
@@ -50,7 +55,7 @@ Rectangle {
 
         Item {
             id: statusBars
-            height: 20
+            height: 30
             anchors.top: parent.top
             anchors.topMargin: 5
             anchors.left: parent.left
@@ -59,7 +64,7 @@ Rectangle {
             anchors.rightMargin: 5
 
             ImageButton {
-                width: 20; height: 20
+                width: 30; height: 30
                 source: "../icons/settings.png"
                 onClicked: settings.toggle()
             }
