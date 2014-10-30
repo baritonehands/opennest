@@ -18,7 +18,7 @@ import QtQuick 1.1
 
 Rectangle {
     id: rectangle1
-    height: 60
+    height: 60 * dp
     color: "#82CAFA"
     objectName: "weatherView"
 
@@ -41,7 +41,7 @@ Rectangle {
                 target: highLow; visible: false
             }
             PropertyChanges {
-                target: currentLoc; anchors.right: parent.right; font.pixelSize: 20;
+                target: currentLoc; anchors.right: parent.right; font.pixelSize: 20 * dp;
                 text: "The weather will continue to change on and off for a long, long time."
             }
         },
@@ -57,7 +57,7 @@ Rectangle {
                 target: highLow; visible: true
             }
             PropertyChanges {
-                target: currentLoc; anchors.right: icon.left; font.pixelSize: 24;
+                target: currentLoc; anchors.right: icon.left; font.pixelSize: 24 * dp;
             }
         }
     ]
@@ -68,14 +68,14 @@ Rectangle {
         verticalAlignment: Text.AlignVCenter
         horizontalAlignment: Text.AlignLeft
         anchors.left: parent.left
-        anchors.leftMargin: 10
+        anchors.leftMargin: 10 * dp
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.top: parent.top
         anchors.topMargin: 0
         anchors.right: icon.left
-        anchors.rightMargin: 10
-        font.pixelSize: 24
+        anchors.rightMargin: 10 * dp
+        font.pixelSize: 24 * dp
         font.family: parent.fontFamily
         wrapMode: Text.Wrap
     }
@@ -84,11 +84,11 @@ Rectangle {
         id: icon
         objectName: "icon"
         source: "../icons/simple_weather_icon_12.png"
-        width: 36
+        width: 36 * dp
         fillMode: Image.PreserveAspectFit
         smooth: true
         anchors.right: currentTemp.left
-        anchors.rightMargin: 10
+        anchors.rightMargin: 10 * dp
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.top: parent.top
@@ -99,7 +99,7 @@ Rectangle {
         id: currentTemp
         text: qsTr("...")
         anchors.right: highLow.left
-        anchors.rightMargin: 10
+        anchors.rightMargin: 10 * dp
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.top: parent.top
@@ -115,7 +115,7 @@ Rectangle {
         text: "95 \u2191\n5 \u2193"
         wrapMode: Text.NoWrap
         anchors.right: parent.right
-        anchors.rightMargin: 10
+        anchors.rightMargin: 10 * dp
         anchors.bottom: parent.bottom
         anchors.bottomMargin: 0
         anchors.top: parent.top

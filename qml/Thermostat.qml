@@ -1,8 +1,8 @@
 import QtQuick 1.1
 
 Rectangle {
-    width: 320
-    height: 110
+    width: 320 * dp
+    height: 110 * dp
 
     objectName: "thermostatView"
     property string fontFamily: "Bariol"
@@ -39,7 +39,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             font.family: fontFamily
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 64
+            font.pixelSize: 64 * dp
         }
 
         Status {
@@ -47,7 +47,7 @@ Rectangle {
             fontFamily: fontFamily
             text: "Heat"
             anchors.right: coolStatus.left
-            anchors.rightMargin: 5
+            anchors.rightMargin: 5 * dp
             anchors.top: txTemp.bottom
             anchors.topMargin: 0
             state: "OFF"
@@ -68,7 +68,7 @@ Rectangle {
             fontFamily: fontFamily
             text: "Fan"
             anchors.left: coolStatus.right
-            anchors.leftMargin: 5
+            anchors.leftMargin: 5 * dp
             anchors.top: txTemp.bottom
             anchors.topMargin: 0
             state: "ON"
@@ -86,24 +86,24 @@ Rectangle {
 
         Text {
             id: txSetPoint
-            width: 70
+            width: 70 * dp
             height: font.pixelSize
             text: "%1\u00b0".arg(setTemp)
-            anchors.horizontalCenterOffset: -30
+            anchors.horizontalCenterOffset: -30 * dp
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             horizontalAlignment: Text.AlignHCenter
             font.family: fontFamily
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 40
+            font.pixelSize: 40 * dp
         }
 
         Column {
-            width: 50
-            anchors.horizontalCenterOffset: 35
+            width: 50 * dp
+            anchors.horizontalCenterOffset: 35 * dp
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: txSetPoint.verticalCenter
-            spacing: 10
+            spacing: 10 * dp
 
             function changeTemp(control) {
                 thermostat.setTemp += control.direction

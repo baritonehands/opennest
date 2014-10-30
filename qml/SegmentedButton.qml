@@ -18,7 +18,7 @@ import QtQuick 1.1
 
 MouseArea {
     state: "NORMAL"
-    height: 40
+    height: 40 * dp
 
     property bool selected: false
     property string text: "Text"
@@ -101,9 +101,9 @@ MouseArea {
 
     Rectangle {
         id: round
-        radius: 10;
+        radius: 10 * dp;
         height: parent.height
-        width: 20
+        width: 20 * dp
     }
 
     Rectangle {
@@ -118,7 +118,7 @@ MouseArea {
     Text {
         id: text
         text: parent.text
-        font.pixelSize: 20
+        font.pixelSize: 20 * dp
         font.family: fontFamily
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter

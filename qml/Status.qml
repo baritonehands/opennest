@@ -45,7 +45,7 @@ Rectangle {
 
     Rectangle {
         id: icon
-        radius: 6
+        radius: 6 * dp
         anchors.fill: parent
         border.width: 1
         smooth: true
@@ -54,7 +54,7 @@ Rectangle {
     Text {
         id: text
         text: parent.text
-        font.pixelSize: 14
+        font.pixelSize: 14 * dp
         font.family: fontFamily
         font.bold: true
         horizontalAlignment: Text.AlignHCenter
@@ -64,8 +64,8 @@ Rectangle {
         anchors.centerIn: parent
 
         Component.onCompleted: {
-            parent.width = width + 8
-            parent.height = height + 3
+            parent.width = (width + 8) * dp
+            parent.height = (height + 3) * dp
         }
     }
 }

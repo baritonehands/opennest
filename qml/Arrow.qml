@@ -18,8 +18,8 @@ import QtQuick 1.1
 
 MouseArea {
     id: m
-    width: 50
-    height: 50
+    width: 50 * dp
+    height: 50 * dp
 
     property int direction: 1
 

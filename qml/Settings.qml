@@ -30,17 +30,17 @@ Rectangle {
     signal modeChanged(int mode)
 
     Column {
-        spacing: 10
-        width: parent.width - 20
+        spacing: 10 * dp
+        width: (parent.width - 20) * dp
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
         Column {
-            spacing: 5
+            spacing: 5 * dp
             anchors.horizontalCenter: parent.horizontalCenter
             Text {
                 font.family: fontFamily
-                font.pixelSize: 16
+                font.pixelSize: 16 * dp
                 text: "Mode:"
                 color: "white"
             }
@@ -55,11 +55,11 @@ Rectangle {
         }
 
         Column {
-            spacing: 5
+            spacing: 5 * dp
             anchors.horizontalCenter: parent.horizontalCenter
             Text {
                 font.family: fontFamily
-                font.pixelSize: 16
+                font.pixelSize: 16 * dp
                 text: "Fan:"
                 color: "white"
             }
@@ -73,11 +73,11 @@ Rectangle {
         }
 
         Column {
-            spacing: 5
+            spacing: 5 * dp
             anchors.horizontalCenter: parent.horizontalCenter
             Text {
                 font.family: fontFamily
-                font.pixelSize: 16
+                font.pixelSize: 16 * dp
                 text: "Units:"
                 color: "white"
             }

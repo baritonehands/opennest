@@ -18,8 +18,8 @@ import QtQuick 1.1
 
 Item {
     id: alert
-    width: 320
-    height: 240
+    width: 320 * dp
+    height: 240 * dp
     visible: false
     state: "CLOSED"
 
@@ -96,9 +96,9 @@ Item {
     Rectangle {
         id: inner
         color: "#FFFFFF"
-        radius: 20
-        width: 280
-        height: 200
+        radius: 20 * dp
+        width: 280 * dp
+        height: 200 * dp
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 
@@ -106,21 +106,21 @@ Item {
             id: msg
             text: "Your alert message goes here."
             wrapMode: Text.Wrap
-            font.pixelSize: 24
+            font.pixelSize: 24 * dp
             font.family: fontFamily
             anchors.left: parent.left
-            anchors.leftMargin: 20
+            anchors.leftMargin: 20 * dp
             anchors.right: parent.right
-            anchors.rightMargin: 20
+            anchors.rightMargin: 20 * dp
             anchors.top: parent.top
-            anchors.topMargin: 20
+            anchors.topMargin: 20 * dp
         }
 
         Row {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
-            anchors.bottomMargin: 20
-            spacing: 10
+            anchors.bottomMargin: 20 * dp
+            spacing: 10 * dp
 
             Repeater {
                 id: buttons

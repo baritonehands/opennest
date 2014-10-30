@@ -55,16 +55,16 @@ Rectangle {
 
         Item {
             id: statusBars
-            height: 30
+            height: 30 * dp
             anchors.top: parent.top
-            anchors.topMargin: 5
+            anchors.topMargin: 5 * dp
             anchors.left: parent.left
-            anchors.leftMargin: 5
+            anchors.leftMargin: 5 * dp
             anchors.right: parent.right
-            anchors.rightMargin: 5
+            anchors.rightMargin: 5 * dp
 
             ImageButton {
-                width: 30; height: 30
+                width: 30 * dp; height: 30 * dp
                 source: "../icons/settings.png"
                 onClicked: settings.toggle()
             }
@@ -107,6 +107,4 @@ Rectangle {
             console.log('Clicked ' + button)
         }
     }
-
-
 }

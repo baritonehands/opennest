@@ -18,7 +18,7 @@ import QtQuick 1.1
 
 MouseArea {
     state: "NORMAL"
-    height: 40
+    height: 40 * dp
 
     property string text: "Text"
     property string fontFamily: "Bariol"
@@ -54,7 +54,7 @@ MouseArea {
 
     Rectangle {
         id: bg
-        radius: 10
+        radius: 10 * dp
         anchors.fill: parent
         border.width: 1
         smooth: true
@@ -64,7 +64,7 @@ MouseArea {
     Text {
         id: text
         text: parent.text
-        font.pixelSize: 24
+        font.pixelSize: 24 * dp
         font.family: fontFamily
         horizontalAlignment: Text.AlignHCenter
         verticalAlignment: Text.AlignVCenter
@@ -72,7 +72,7 @@ MouseArea {
         anchors.centerIn: parent
 
         Component.onCompleted: {
-            parent.width = width + 30
+            parent.width = (width + 30) * dp
         }
     }
 }

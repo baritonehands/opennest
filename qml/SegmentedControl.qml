@@ -17,12 +17,12 @@
 import QtQuick 1.1
 
 Rectangle {
-    width: 150
-    height: 40
+    width: 150 * dp
+    height: 40 * dp
     color: "Transparent"
     border.width: 1
     border.color: "#82CAFA"
-    radius: 10
+    radius: 10 * dp
     anchors.horizontalCenter: parent.horizontalCenter
 
     property variant buttons

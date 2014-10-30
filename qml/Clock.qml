@@ -17,7 +17,7 @@
 import QtQuick 1.1
 
 Text {
-    font.pixelSize: 16
+    font.pixelSize: 16 * dp
     font.family: fontFamily
     text: "00:00 am"
     smooth: true

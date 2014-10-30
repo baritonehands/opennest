@@ -31,6 +31,7 @@ app = QApplication(sys.argv)
 
 # Create the QML user interface.
 view = QDeclarativeView()
+view.rootContext().setContextProperty("dp", 1)
 view.setSource(QUrl('qml/nest.qml'))
 view.setResizeMode(QDeclarativeView.SizeViewToRootObject)
 
