@@ -31,7 +31,7 @@ Rectangle {
 
     Column {
         spacing: 10 * dp
-        width: (parent.width - 20) * dp
+        width: parent.width - 20 * dp
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
 

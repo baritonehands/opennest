@@ -69,7 +69,7 @@ MouseArea {
             round.visible = false
             bg.anchors.right = right
             bg.anchors.left = left
-            bg.border.width = 1;
+            bg.border.width = 1 * dp;
         }
         else if(lrc == -1) {
             round.visible = true

@@ -20,7 +20,7 @@ Rectangle {
     width: 150 * dp
     height: 40 * dp
     color: "Transparent"
-    border.width: 1
+    border.width: 1 * dp
     border.color: "#82CAFA"
     radius: 10 * dp
     anchors.horizontalCenter: parent.horizontalCenter

@@ -47,7 +47,7 @@ Rectangle {
         id: icon
         radius: 6 * dp
         anchors.fill: parent
-        border.width: 1
+        border.width: 1 * dp
         smooth: true
     }
 
@@ -64,8 +64,8 @@ Rectangle {
         anchors.centerIn: parent
 
         Component.onCompleted: {
-            parent.width = (width + 8) * dp
-            parent.height = (height + 3) * dp
+            parent.width = width + 8 * dp
+            parent.height = height + 3 * dp
         }
     }
 }
