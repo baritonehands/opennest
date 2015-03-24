@@ -223,19 +223,15 @@ class Thermostat(QObject):
 
 if __name__ == "__main__":
     from PyQt4.QtCore import QCoreApplication
-    import sys, pdb
+    import sys, pdb, signal
+
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
     
     app = QCoreApplication(sys.argv)
     
     # Testing the thermostat on the console
     t = Thermostat(parent=app, test=True)
     t.start()
-    
-    def uncaught(type, value, traceback):
-        print type, value, traceback
-        QCoreApplication.quit()
-        
-    sys.excepthook = uncaught
     
     app.exec_()
     

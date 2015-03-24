@@ -34,9 +34,10 @@ class Weather(QObject):
         '03','02','01','02','01','29','01','27','27','27',
         '21','25','04','27','24','27']
 
-    def __init__(self, parent = None, units='imperial'):
+    def __init__(self, parent = None, units='imperial', test=False):
         QObject.__init__(self, parent)
         self._t = None
+        self._test = test
         self._current = dict()
         self._units = units
         parent.setProperty('weather', self)
@@ -74,8 +75,9 @@ class Weather(QObject):
         except:
             self.error.emit('Could not retrieve weather.')
         self._t = threading.Timer(30, self.run)
+        self._t.daemon = True
         self._t.start()
-        #self._pp.pprint(self._current)
+        if self._test: self._pp.pprint(self._current)
 
     @pyqtProperty(bool)
     def weatherAvailable(self):
@@ -127,3 +129,20 @@ class Weather(QObject):
         if(self._t is not None):
             self._t.cancel()
             self._t = None
+
+if __name__ == "__main__":
+    from PyQt4.QtCore import QCoreApplication
+    import sys, pdb, signal
+
+    signal.signal(signal.SIGINT, signal.SIG_DFL)
+
+    app = QCoreApplication(sys.argv)
+
+    # Testing the thermostat on the console
+    t = Weather(parent=app, test=True)
+    t.start()
+
+    app.exec_()
+
+    print 'Stopping...'
+    t.stop()

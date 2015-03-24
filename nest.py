@@ -18,7 +18,7 @@
 
 import sys, platform, getopt
 
-from PyQt4.QtCore import QDateTime, QObject, QUrl, pyqtSignal
+from PyQt4.QtCore import QDateTime, QObject, QUrl, pyqtSignal, SIGNAL
 from PyQt4.QtGui import QApplication, QGraphicsColorizeEffect, QColor
 from PyQt4.QtDeclarative import QDeclarativeView
 from triangle import *
@@ -76,7 +76,23 @@ if(fullscreen):
 else:
     view.show()
 
-app.exec_()
+
+def stop():
+    print "="*40, "Closing connections..."
+    print "="*40, "closed."
+
+    print "="*40, "Stopping reactor..."
+    remote.stop()
+    print "="*40, "stopped."
+app.connect(app, SIGNAL("lastWindowClosed()"), stop)
+
+import remote
+remote.start()
+
+#app.exec_()
+
+
+
 
 weather.stop()
 if thermostat is not None:
